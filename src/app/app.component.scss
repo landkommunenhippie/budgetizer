@@ -1,0 +1,23 @@
+.mat-sidenav-container {
+	height: 100%;
+}
+mat-sidenav nav {
+	margin-right: 13px;
+}
+mat-sidenav nav > ul {
+	list-style-type: none;
+	padding-left: 13px;
+}
+
+mat-grid-tile {
+	height: 100%;
+	top:20px;
+}
+
+[fxLayout="column"] {
+	margin-left:13px;
+}
+
+mat-sidenav-content [fxLayout="row"]:nth-child(2) {
+	margin-top:13px;
+}

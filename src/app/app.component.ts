@@ -6,5 +6,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'budgetizer-angular';
+  yearOverviewShown = true;
+  incomeShown = true;
+
+	public isSecondaryGridShown():boolean {
+		return this.incomeShown;
+	}
 }
