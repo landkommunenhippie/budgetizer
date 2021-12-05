@@ -1,6 +1,15 @@
 export interface RegularIncome {
 
-	name: string,
-	description: string,
-	income: number
+	name: String,
+	description: String,
+	income: Number
+
+}
+
+/**
+ * cnst-func to be able to instantiate an empty regularIncome.
+ * Used in view.
+*/
+export const regularIncomeConst = (): RegularIncome => {
+	return { name: '', description: '',  income: 0};
 }
