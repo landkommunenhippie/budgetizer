@@ -7,9 +7,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   yearOverviewShown = true;
-  incomeShown = true;
+  incomeShown = false;
+  spendingShown = false;
 
 	public isSecondaryGridShown():boolean {
-		return this.incomeShown;
+		return this.incomeShown || this.spendingShown;
 	}
 }

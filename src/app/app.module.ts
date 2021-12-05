@@ -10,7 +10,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
  * angular material
 */
 import { MatTableModule } from '@angular/material/table'
-import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatGridListModule } from '@angular/material/grid-list';
@@ -38,7 +38,7 @@ import { RegularSpendingComponent } from './core/components/regular-spending/reg
     BrowserAnimationsModule,
 		FlexLayoutModule,
 		MatTableModule,
-		MatSidenavModule,
+		MatToolbarModule,
 		MatButtonModule,
 		MatIconModule,
 		MatGridListModule

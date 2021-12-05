@@ -1,41 +1,46 @@
 <div class="mat-typography app-frame mat-app-background">
-	<h1>Budgetizer</h1>
-	<a mat-icon-button (click)="mainNavigation.toggle()">
-		<mat-icon>menu</mat-icon>
-	</a>			
+	<mat-toolbar>
+		<span>Budgetizer</span>
+		<span class="toolbar-spacer"></span>
+		<button mat-icon-button (click)="yearOverviewShown = !!!yearOverviewShown">
+			<mat-icon>calendar_today</mat-icon>
+		</button>
+		<button mat-icon-button (click)="incomeShown = !!!incomeShown">
+			<mat-icon>attach_money</mat-icon>
+		</button>
+		<button mat-icon-button (click)="spendingShown = !!!spendingShown">
+			<mat-icon>money_off</mat-icon>
+		</button>
+
+	</mat-toolbar>
 	
-	<mat-sidenav-container autosize="true">
-		<mat-sidenav #mainNavigation role="region">
-			<nav>
-				<ul>
-					<li>
-						<button mat-button (click)="yearOverviewShown = !!!yearOverviewShown">Budget Plan</button>
-					</li>
-					<li>
-						<button mat-button>Income</button>
-					</li>
-				</ul>
-			</nav>
-		</mat-sidenav>
-		
-		<mat-sidenav-content class="contianer">
-			<!-- <router-outlet></router-outlet>-->
-			<div fxLayout="row">
-				<div fxLayout="column" fxFlex="50">
-					<app-year-budget-overview style="height:100%;width:100%;"></app-year-budget-overview>
-				</div>
-
-				<div fxLayout="column" fxFlex="45">
-					<div fxLayout="row">
-						<app-regular-income fxLayout="column" style="height:100%;width:100%;"></app-regular-income>
-					</div>
-					<div fxLayout="row">
-						<app-regular-spending fxLayout="column" style="height:100%;width:100%;"></app-regular-spending>
-					</div>
-				</div>
-
+	<!-- <router-outlet></router-outlet>-->
+	<main>
+		<div fxLayout="row">
+			<div 
+				*ngIf="yearOverviewShown"
+				fxLayout="column"
+				[fxFlex]="isSecondaryGridShown() ? 60 : 100"> 
+				<app-year-budget-overview style="height:100%;width:100%;"></app-year-budget-overview>
 			</div>
-		</mat-sidenav-content>
-		
-	</mat-sidenav-container>
+
+			<div
+				*ngIf="isSecondaryGridShown"
+				fxLayout="column"
+				fxFlex>
+				<div
+					*ngIf="incomeShown" 
+					fxLayout="row">
+					<app-regular-income fxLayout="column" style="height:100%;width:100%;"></app-regular-income>
+				</div>
+				<div
+					*ngIf="spendingShown"
+					fxLayout="row">
+					<app-regular-spending fxLayout="column" style="height:100%;width:100%;"></app-regular-spending>
+				</div>
+			</div>
+
+		</div>
+	</main>
+	
 </div>

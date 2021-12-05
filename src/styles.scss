@@ -6,7 +6,7 @@ html, body { height: 100%;}
 body { font-family: Roboto, "Helvetica Neue", sans-serif; }
 /* Background of app */
 html, body, app-root, .app-frame {
-	overflow: hidden;
+	overflow: auto;
 	margin: 0;
 	height: 100%;
 	box-sizing: border-box;
