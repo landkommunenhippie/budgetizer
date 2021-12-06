@@ -45,8 +45,13 @@ export class EditableTableComponent implements OnInit {
 	}
 
 	toggleEditMode(rowIndex: number): void {
-		this.tableDataInEditing[rowIndex] = {...this.tableData[rowIndex]};
 		this.isEditMode[rowIndex] = !this.isEditMode[rowIndex];
+		if (this.isEditMode[rowIndex]) {
+			this.tableDataInEditing[rowIndex] = Object.create(this.tableData[rowIndex]);
+		} else {
+			this.tableDataInEditing.splice(rowIndex, 1);
+		}
+		
 	}
 
 	delete(index: number): void {

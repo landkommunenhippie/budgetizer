@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { EditableTableDescrption } from 'src/app/shared/model/editable-table-description.model';
-import { RegularSpending, regularSpendingConst } from '../../models/regular-spending.model';
+import { RegularSpending, RegularSpendingBuilder, regularSpendingConst } from '../../models/regular-spending.model';
 
 @Component({
   selector: 'app-regular-spending',
@@ -19,9 +19,8 @@ export class RegularSpendingComponent implements OnInit {
 
   constructor() {
 		this.regularSpendings = [
-			{name: 'Miete', description: 'zum Beginn des Monats', spendingMonthly: 1000},
-			{name: 'KiGa', description: 'Viel zu teuer', spendingMonthly: 400},
-			{name: 'Haftpflicht', description: 'Mal wechseln', spendingAnually: 200}
+			new RegularSpendingBuilder().name('Miete').description('zum Beginn des Monats').spendingMonthly(900).build(),
+			new RegularSpendingBuilder().name('Versicherung').description('zum Beginn des Monats').spendingAnually(400).build(),
 		];
 	}
 

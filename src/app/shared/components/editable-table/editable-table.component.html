@@ -7,12 +7,15 @@
 			<ng-container matColumnDef="{{ tableDesc.valuePropertyName }}">
 				<th mat-header-cell *matHeaderCellDef> {{ tableDesc.label }} </th>
 				<td mat-cell *matCellDef="let rowData; let rowIdx = index;"> 
+
 					<span *ngIf="!tableDesc.editable || !isEditMode[rowIdx]">{{ rowData[tableDesc.valuePropertyName] }}</span>
-					<ng-container
+
+					<mat-form-field
 						*ngIf="tableDesc.editable && isEditMode[rowIdx]"
-						[ngTemplateOutlet]="inputTemplate"
-						[ngTemplateOutletContext]="{object:tableDataInEditing[rowIdx], property:tableDesc.valuePropertyName, type:tableDesc.valueInputType, caption:tableDesc.label}">
-					</ng-container>	
+						class="table-edit-mode"
+						appearance="fill">
+						<input matInput [(ngModel)]="tableDataInEditing[rowIdx][tableDesc.valuePropertyName]" type={{tableDesc.valueInputType}} placeholder="{{tableDesc.label}}">
+					</mat-form-field>	
 				</td>
 			</ng-container>
 
@@ -43,15 +46,3 @@
 
 </table>
 <app-item-adder [add-item-function]="addItem.bind(this)"></app-item-adder>
-
-	<!-- Template for edit-mode -->
-<ng-template
-	#inputTemplate
-	let-income="object"
-	let-property="property"
-	let-type="type"
-	let-caption="caption">
-	<mat-form-field class="table-edit-mode" appearance="fill">
-    <input matInput [(ngModel)]="income[property]" type={{type}} placeholder="{{caption}}">
-  </mat-form-field>
-</ng-template>
