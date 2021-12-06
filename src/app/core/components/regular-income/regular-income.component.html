@@ -1,7 +1,4 @@
 <h2>Monthly Income</h2>
-<app-item-adder
-	[add-item-function]="addItem.bind(this)"
->
 	<table mat-table [dataSource]="datasource" class="mat-elevation-z8 demo-table">
 		<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
 		<tr mat-row *matRowDef="let row; columns: displayedColumns; let rowIdx = index;"></tr>
@@ -66,8 +63,9 @@
 		</ng-container>
 
 	</table>
-</app-item-adder>
+	<app-item-adder [add-item-function]="addItem.bind(this)"></app-item-adder>
 
+	<!-- Template for edit-mode -->
 <ng-template
 	#inputTemplate
 	let-income="object"
