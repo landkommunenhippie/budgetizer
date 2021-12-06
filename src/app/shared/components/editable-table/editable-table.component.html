@@ -13,7 +13,7 @@
 					<mat-form-field
 						*ngIf="tableDesc.editable && isEditMode[rowIdx]"
 						class="table-edit-mode"
-						appearance="fill">
+						appearance="standard">
 						<input matInput [(ngModel)]="tableDataInEditing[rowIdx][tableDesc.valuePropertyName]" type={{tableDesc.valueInputType}} placeholder="{{tableDesc.label}}">
 					</mat-form-field>	
 				</td>

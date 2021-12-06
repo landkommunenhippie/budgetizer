@@ -1,11 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { EditableTableDescrption } from '../../model/editable-table-description.model';
 import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-editable-table',
   templateUrl: './editable-table.component.html',
-  styleUrls: ['./editable-table.component.scss']
+  styleUrls: ['./editable-table.component.scss'],
 })
 export class EditableTableComponent implements OnInit {
 

@@ -1,14 +1,26 @@
 <div class="mat-typography app-frame mat-app-background">
-	<mat-toolbar>
+	<mat-toolbar role="heading">
 		<span>Budgetizer</span>
 		<span class="toolbar-spacer"></span>
-		<button mat-icon-button (click)="yearOverviewShown = !yearOverviewShown">
+		<button
+			mat-icon-button
+			(click)="yearOverviewShown = !yearOverviewShown"
+			color="{{yearOverviewShown ? 'primary': null}}"
+			title="Jahresübersicht">
 			<mat-icon>calendar_today</mat-icon>
 		</button>
-		<button mat-icon-button (click)="incomeShown = !incomeShown">
+		<button
+			mat-icon-button
+			(click)="incomeShown = !incomeShown"
+			color="{{incomeShown ? 'primary': null}}"
+			title="Einnahmen">
 			<mat-icon>attach_money</mat-icon>
 		</button>
-		<button mat-icon-button (click)="spendingShown = !spendingShown">
+		<button
+			mat-icon-button
+			(click)="spendingShown = !spendingShown"
+			color="{{spendingShown ? 'primary': null}}"
+			title="Ausgaben">
 			<mat-icon>money_off</mat-icon>
 		</button>
 
