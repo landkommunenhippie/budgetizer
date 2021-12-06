@@ -6,6 +6,10 @@ import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { registerLocaleData } from '@angular/common';
+import localeDe from '@angular/common/locales/de';
+import localeDeExtra from '@angular/common/locales/extra/de';
+
 
 /**
  * angular material
@@ -54,4 +58,8 @@ import { EditableTableComponent } from './shared/components/editable-table/edita
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule { 
+	constructor() {
+		registerLocaleData(localeDe, 'de-DE', localeDeExtra);
+	}
+}

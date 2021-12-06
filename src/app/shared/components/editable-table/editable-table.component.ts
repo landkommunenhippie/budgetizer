@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { EditableTableDescrption } from '../../model/editable-table-description.model';
 import { MatTableDataSource } from '@angular/material/table';
 
@@ -61,4 +61,12 @@ export class EditableTableComponent implements OnInit {
 	refreshTable(): void {
 		this.datasource.data = this.tableData;
 	}
+
+	getDisplayValue(value: any, displayProcessor: Function|undefined) : string {
+		if(displayProcessor) {
+			return displayProcessor(value);
+		}
+		return value;
+	}
+
 }

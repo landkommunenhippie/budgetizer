@@ -8,13 +8,20 @@
 				<th mat-header-cell *matHeaderCellDef> {{ tableDesc.label }} </th>
 				<td mat-cell *matCellDef="let rowData; let rowIdx = index;"> 
 
-					<span *ngIf="!tableDesc.editable || !isEditMode[rowIdx]">{{ rowData[tableDesc.valuePropertyName] }}</span>
+					<span *ngIf="!tableDesc.editable || !isEditMode[rowIdx]">
+						{{  getDisplayValue(rowData[tableDesc.valuePropertyName], tableDesc.displayProcessor) }}
+					</span>
 
 					<mat-form-field
 						*ngIf="tableDesc.editable && isEditMode[rowIdx]"
 						class="table-edit-mode"
 						appearance="standard">
-						<input matInput [(ngModel)]="tableDataInEditing[rowIdx][tableDesc.valuePropertyName]" type={{tableDesc.valueInputType}} placeholder="{{tableDesc.label}}">
+						<input
+							matInput
+							[(ngModel)]="tableDataInEditing[rowIdx][tableDesc.valuePropertyName]"
+							type={{tableDesc.valueInputType}} 
+							placeholder="{{tableDesc.label}}"
+							[attr.step]="tableDesc.valueInputType === 'number' ? 0.01 : null">
 					</mat-form-field>	
 				</td>
 			</ng-container>
