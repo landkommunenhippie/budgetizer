@@ -16,12 +16,29 @@
 						*ngIf="tableDesc.editable && isEditMode[rowIdx]"
 						class="table-edit-mode"
 						appearance="standard">
-						<input
+						<input *ngIf="tableDesc.valueInputType === undefined || tableDesc.valueInputType === 'text'"
+							matInput
+							[(ngModel)]="tableDataInEditing[rowIdx][tableDesc.valuePropertyName]"
+							type={{tableDesc.valueInputType}} 
+							placeholder="{{tableDesc.label}}">
+
+						<input *ngIf="tableDesc.valueInputType === 'number'"
 							matInput
 							[(ngModel)]="tableDataInEditing[rowIdx][tableDesc.valuePropertyName]"
 							type={{tableDesc.valueInputType}} 
 							placeholder="{{tableDesc.label}}"
-							[attr.step]="tableDesc.valueInputType === 'number' ? 0.01 : null">
+							step="0.01">
+
+						<ng-container *ngIf="tableDesc.valueInputType === 'date'">
+								<input
+									matInput
+									[matDatepicker]="picker3"
+									[(ngModel)]="tableDataInEditing[rowIdx][tableDesc.valuePropertyName]"
+									>
+								<mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+								<mat-datepicker #picker3></mat-datepicker>
+						 
+						</ng-container>
 					</mat-form-field>	
 				</td>
 			</ng-container>

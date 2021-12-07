@@ -22,7 +22,7 @@ export class EditableTableComponent implements OnInit {
 
 	isEditMode: boolean[] = [];
 	tableDataInEditing: any[] = [];
-	
+
   constructor() { }
 
   ngOnInit(): void {

@@ -20,6 +20,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatInputModule } from '@angular/material/input';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
 
 /**
  * Custom 
@@ -53,7 +55,9 @@ import { EditableTableComponent } from './shared/components/editable-table/edita
 		MatButtonModule,
 		MatIconModule,
 		MatGridListModule,
-		MatInputModule
+		MatInputModule,
+		MatDatepickerModule,
+		MatNativeDateModule
   ],
   providers: [],
   bootstrap: [AppComponent]
