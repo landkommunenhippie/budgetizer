@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { RegularIncome, regularIncomeConst } from '../../models/regular-income.model';
 import { EditableTableDescrption } from 'src/app/shared/models/editable-table-description.model';
+import { Store } from '@ngrx/store';
+import { selectRegularIncomes } from '../../state/regular-income.selector';
+import { RegularIncomeService } from '../../services/regular-income.service';
+import { regularIncomesModified } from '../../state/regular-income.action';
 
 @Component({
   selector: 'app-regular-income',
@@ -17,14 +21,13 @@ export class RegularIncomeComponent implements OnInit {
 	]
 	regularIncomeConstructor = regularIncomeConst;
 	
-	constructor() { 
-		this.regularIncomes = [
-			{name: 'Lohn', description: 'zum ende des Monats', income: 6000},
-			{name: 'Kindergeld', description: 'Mitte des Monats', income: 420}
-		];
-
-	}
+	constructor(private store: Store, private regulareIncomeService: RegularIncomeService) { }
 
   ngOnInit(): void {
-  }
+		this.store.select(selectRegularIncomes).subscribe((incomes) => this.regularIncomes = incomes);
+	}
+
+	updateRegularIncomes(regularIncomes: RegularIncome[]):void {
+		this.store.dispatch(regularIncomesModified({regularIncomes}));
+	}
 }

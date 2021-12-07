@@ -1,7 +1,7 @@
 /**
  * angular
 */
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -34,7 +34,17 @@ import { RegularSpendingComponent } from './domain/spending/components/regular-s
 import { ItemAdderComponent } from './shared/components/item-adder/item-adder.component';
 import { EditableTableComponent } from './shared/components/editable-table/editable-table.component'
 
+/**
+ * State
+*/
+import { StoreModule } from '@ngrx/store';
+import { regularIncomeReducer } from './domain/income/state/regular-income.reducer'
 
+import { RegularIncomeService } from './domain/income/services/regular-income.service';
+import { DevStateCounterComponent } from './shared/components/dev-state-counter/dev-state-counter.component'
+export function initApp(regularIncomeService: RegularIncomeService) {
+	return () => regularIncomeService.loadRegularIncomes();
+}
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,6 +53,7 @@ import { EditableTableComponent } from './shared/components/editable-table/edita
     RegularSpendingComponent,
     ItemAdderComponent,
     EditableTableComponent,
+    DevStateCounterComponent,
   ],
   imports: [
     BrowserModule,
@@ -57,9 +68,14 @@ import { EditableTableComponent } from './shared/components/editable-table/edita
 		MatGridListModule,
 		MatInputModule,
 		MatDatepickerModule,
-		MatNativeDateModule
+		MatNativeDateModule,
+		StoreModule.forRoot({regularIncomes: regularIncomeReducer })
   ],
-  providers: [],
+  providers: [
+		RegularIncomeService,
+		{provide: APP_INITIALIZER, useFactory: initApp, deps: [RegularIncomeService], multi: true}
+
+	],
   bootstrap: [AppComponent]
 })
 export class AppModule { 

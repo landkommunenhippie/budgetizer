@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { EditableTableDescrption } from '../../models/editable-table-description.model';
 import { MatTableDataSource } from '@angular/material/table';
 
@@ -9,24 +9,29 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 export class EditableTableComponent implements OnInit {
 
-	@Input('table-data')
-	tableData: any[] = [];
+	private _tableData:any[] = [];
+	@Input('table-data') set tableData(incomingtableData: any[]) {
+		this._tableData = [...incomingtableData];
+		this.refreshTable();
+	}
+	get tableData() { return this._tableData; }
 	@Input('table-descriptions')
 	tableDescriptions: EditableTableDescrption[] = [];
 	datasource: MatTableDataSource<any> = new MatTableDataSource(this.tableData);
 	displayedColumns = () => this.tableDescriptions.map(descr => descr.valuePropertyName).concat('actions'); 
 	hasEditableItems = () => this.tableDescriptions.findIndex(descr => descr.editable) >= 0;
-
 	@Input('table-data-construction-function')
 	tableDataConstructionFunction: Function = () => null;
-
+	
+	@Output('data-modified')
+	dataModified = new EventEmitter<any[]>();
+	
 	isEditMode: boolean[] = [];
 	tableDataInEditing: any[] = [];
 
   constructor() { }
 
   ngOnInit(): void {
-		this.refreshTable();
   }
 
 	addItem(): void {
@@ -34,10 +39,11 @@ export class EditableTableComponent implements OnInit {
 		this.toggleEditMode(this.tableData.length - 1);
 		this.refreshTable();
 	}
+
 	saveItem(index: number):void {
 		this.tableData.splice(index, 1, this.tableDataInEditing[index]);
-		this.refreshTable();
 		this.toggleEditMode(index);
+		this.dataModified.next(this.tableData);
 	}
 
 	discard(rowIndex: number): void {
@@ -56,8 +62,9 @@ export class EditableTableComponent implements OnInit {
 
 	delete(index: number): void {
 		this.tableData.splice(index, 1);
-		this.refreshTable();
+		this.dataModified.next(this.tableData);
 	}
+	
 	refreshTable(): void {
 		this.datasource.data = this.tableData;
 	}
