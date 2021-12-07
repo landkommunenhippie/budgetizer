@@ -69,4 +69,13 @@ export class EditableTableComponent implements OnInit {
 		return value;
 	}
 
+	openDatePicker(dp: any) {
+    dp.open();
+  }
+
+  closeDatePicker(eventData: any, dp:any, tableObject: any, proprtyName: string) {
+    tableObject[proprtyName]=eventData;
+		dp.close();    
+  }
+
 }

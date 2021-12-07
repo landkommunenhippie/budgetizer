@@ -32,11 +32,14 @@
 						<ng-container *ngIf="tableDesc.valueInputType === 'date'">
 								<input
 									matInput
-									[matDatepicker]="picker3"
+									[matDatepicker]="picker"
 									[(ngModel)]="tableDataInEditing[rowIdx][tableDesc.valuePropertyName]"
-									>
-								<mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
-								<mat-datepicker #picker3></mat-datepicker>
+									(click)="openDatePicker(picker)">
+								<mat-datepicker
+									#picker
+									startView="year"
+									(monthSelected)="closeDatePicker($event, picker, tableDataInEditing[rowIdx], tableDesc.valuePropertyName)">
+								</mat-datepicker>
 						 
 						</ng-container>
 					</mat-form-field>	
