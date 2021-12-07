@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
 import { RegularIncome, regularIncomeConst } from '../../models/regular-income.model';
-import { EditableTableDescrption } from 'src/app/shared/model/editable-table-description.model';
+import { EditableTableDescrption } from 'src/app/shared/models/editable-table-description.model';
 
 @Component({
   selector: 'app-regular-income',

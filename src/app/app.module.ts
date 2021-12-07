@@ -28,9 +28,9 @@ import {MatNativeDateModule} from '@angular/material/core';
 */
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { RegularIncomeComponent } from './core/components/regular-income/regular-income.component';
-import { YearBudgetOverviewComponent } from './core/components/year-budget-overview/year-budget-overview.component';
-import { RegularSpendingComponent } from './core/components/regular-spending/regular-spending.component';
+import { RegularIncomeComponent } from './domain/income/components/regular-income/regular-income.component';
+import { YearBudgetOverviewComponent } from './domain/budget/components/year-budget-overview/year-budget-overview.component';
+import { RegularSpendingComponent } from './domain/spending/components/regular-spending/regular-spending.component';
 import { ItemAdderComponent } from './shared/components/item-adder/item-adder.component';
 import { EditableTableComponent } from './shared/components/editable-table/editable-table.component'
 

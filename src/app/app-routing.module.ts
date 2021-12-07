@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { RegularIncomeComponent } from './core/components/regular-income/regular-income.component';
+import { RegularIncomeComponent } from './domain/income/components/regular-income/regular-income.component';
 /**
  * DEPRECATED - is not used atm
 */

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MonthlyOverview } from '../../models/monthly-overview.model';
-import { EditableTableDescrption } from 'src/app/shared/model/editable-table-description.model';
+import { EditableTableDescrption } from 'src/app/shared/models/editable-table-description.model';
 
 @Component({
   selector: 'app-year-budget-overview',

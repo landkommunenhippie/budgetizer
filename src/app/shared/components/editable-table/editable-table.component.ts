@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { EditableTableDescrption } from '../../model/editable-table-description.model';
+import { EditableTableDescrption } from '../../models/editable-table-description.model';
 import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
