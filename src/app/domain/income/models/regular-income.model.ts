@@ -3,9 +3,9 @@ import { MutableState } from "src/app/core/state/mutable-state.model";
 export class RegularIncome implements MutableState<RegularIncome> {
 
 	constructor(
-		public name: String,
-		public description: String,
-		public income: Number) { }
+		public name: string,
+		public description: string,
+		public income: number) { }
 
 		public clone = (): RegularIncome => new RegularIncome(this.name, this.description, this.income);
 }	

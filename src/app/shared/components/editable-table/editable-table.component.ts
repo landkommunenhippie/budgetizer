@@ -73,11 +73,14 @@ export class EditableTableComponent implements OnInit {
 		this.datasource.data = this.tableData;
 	}
 
-	getDisplayValue(value: any, displayProcessor: Function|undefined) : string {
-		if(displayProcessor) {
-			return displayProcessor(value);
+	getDisplayValue(rowData: any, propertyName: string, displayProcessor: Function|undefined, dataSource: Function|undefined) : string {
+		if (dataSource) {
+			return dataSource(rowData);
 		}
-		return value;
+		if(displayProcessor) {
+			return displayProcessor(rowData[propertyName]);
+		}
+		return rowData[propertyName];
 	}
 
 	openDatePicker(dp: any) {

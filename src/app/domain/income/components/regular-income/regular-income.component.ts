@@ -20,7 +20,7 @@ export class RegularIncomeComponent implements OnInit, OnDestroy {
 		{label: 'Einkommenshöhe', valuePropertyName: 'income',valueInputType: 'number', editable: true}
 	]
 	emptyItemFactory = regularIncomeConst;
-	public ngDestroyed$ = new Subject();
+	private ngDestroyed$ = new Subject();
 
 	
 	constructor(private store: Store) { }

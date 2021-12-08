@@ -4,5 +4,6 @@ export interface EditableTableDescrption {
 	valuePropertyName: string,
 	valueInputType:string,
 	editable: boolean,
+	dataSource?: Function
 	displayProcessor?: Function
 }
