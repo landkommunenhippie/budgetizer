@@ -1,16 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { RegularIncome, regularIncomeConst } from '../../models/regular-income.model';
 import { EditableTableDescrption } from 'src/app/shared/models/editable-table-description.model';
 import { Store } from '@ngrx/store';
 import { selectRegularIncomes } from '../../../../core/state/income.selector';
 import { regularIncomesModified } from '../../state/regular-income.action';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-regular-income',
   templateUrl: './regular-income.component.html',
   styleUrls: ['./regular-income.component.scss']
 })
-export class RegularIncomeComponent implements OnInit {
+export class RegularIncomeComponent implements OnInit, OnDestroy {
 
 	regularIncomes: RegularIncome[] = [];
 	tableDescription: EditableTableDescrption[] = [
@@ -19,12 +20,19 @@ export class RegularIncomeComponent implements OnInit {
 		{label: 'Einkommenshöhe', valuePropertyName: 'income',valueInputType: 'number', editable: true}
 	]
 	regularIncomeConstructor = regularIncomeConst;
+	public ngDestroyed$ = new Subject();
+
 	
 	constructor(private store: Store) { }
-
+	
   ngOnInit(): void {
 		this.store.select(selectRegularIncomes)
-		.subscribe((incomes) => this.regularIncomes = incomes);
+			.pipe(takeUntil(this.ngDestroyed$))
+			.subscribe((incomes) => this.regularIncomes = incomes);
+	}
+
+	ngOnDestroy(): void {
+		this.ngDestroyed$.next(undefined);
 	}
 
 	updateRegularIncomes(regularIncomes: RegularIncome[]):void {

@@ -83,8 +83,6 @@ export function initApp(
 		StoreModule.forRoot({regularIncomes: regularIncomeReducer, regularSpendings: regularSpendingReducer })
   ],
   providers: [
-		RegularIncomeService,
-		RegularSpendingService,
 		{
 			provide: APP_INITIALIZER,
 			useFactory: initApp,
