@@ -20,7 +20,7 @@ export class RegularSpendingComponent implements OnInit, OnDestroy {
 		{label: 'Ausgabenhöhe Monatlich', valuePropertyName: 'spendingMonthly',valueInputType: 'number', editable: true},
 		{label: 'Ausgabenhöhe Jährlich', valuePropertyName: 'spendingAnually',valueInputType: 'number', editable: true}
 	]
-	regularSpendingConsctructor = regularSpendingConst;
+	emptyItemFactory = regularSpendingConst;
 	public ngDestroyed$ = new Subject();
 
   constructor(private store: Store) {	}

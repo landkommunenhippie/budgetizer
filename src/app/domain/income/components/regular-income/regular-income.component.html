@@ -3,7 +3,7 @@
 <app-editable-table
 	[table-data]="regularIncomes"
 	[table-descriptions]="tableDescription"
-	[table-data-construction-function]="regularIncomeConstructor"
+	[table-data-construction-function]="emptyItemFactory"
 	(data-modified)="updateRegularIncomes($event)">
 
 </app-editable-table>
