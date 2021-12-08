@@ -1,4 +1,6 @@
-export class RegularSpending {
+import { MutableState } from "src/app/core/state/mutable-state.model";
+
+export class RegularSpending implements MutableState<RegularSpending> {
 
 	name: string = '';
 	description: string = '';
@@ -13,11 +15,19 @@ export class RegularSpending {
 		this._spendingAnually = spendingMonthly * 12;	
 	}
 
-
 	public set spendingAnually(spendingAnually: number) {
 		this._spendingAnually = spendingAnually;
 		this._spendingMonthly = spendingAnually / 12;	
 	}
+
+	public clone = (): RegularSpending => 
+		new RegularSpendingBuilder()
+			.name(this.name)
+			.description(this.description)
+			.spendingMonthly(this.spendingMonthly)
+			.spendingAnually(this.spendingAnually)
+			.build();
+
 }
 
 /**

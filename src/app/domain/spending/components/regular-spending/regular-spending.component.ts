@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { EditableTableDescrption } from 'src/app/shared/models/editable-table-description.model';
-import { RegularSpending, RegularSpendingBuilder, regularSpendingConst } from '../../models/regular-spending.model';
+import { RegularSpending, regularSpendingConst } from '../../models/regular-spending.model';
+import { Store } from '@ngrx/store';
+import { selectRegularSpendings } from '../../../../core/state/spending.selector';
+import { regularSpendingsModified } from '../../state/regular-spending.action';
+
 
 @Component({
   selector: 'app-regular-spending',
@@ -8,7 +12,7 @@ import { RegularSpending, RegularSpendingBuilder, regularSpendingConst } from '.
   styleUrls: ['./regular-spending.component.scss']
 })
 export class RegularSpendingComponent implements OnInit {
-	regularSpendings: RegularSpending[];
+	regularSpendings: RegularSpending[] = [];
 	tableDescription: EditableTableDescrption[] = [
 		{label: 'Name', valuePropertyName: 'name', valueInputType: 'text', editable: true},
 		{label: 'Beschreibung', valuePropertyName: 'description',valueInputType: 'text', editable: true},
@@ -17,15 +21,15 @@ export class RegularSpendingComponent implements OnInit {
 	]
 	regularSpendingConsctructor = regularSpendingConst;
 
-  constructor() {
-		this.regularSpendings = [
-			new RegularSpendingBuilder().name('Miete').description('zum Beginn des Monats').spendingMonthly(900).build(),
-			new RegularSpendingBuilder().name('Versicherung').description('zum Beginn des Monats').spendingAnually(400).build(),
-		];
-	}
+  constructor(private store: Store) {	}
 
   ngOnInit(): void {
-		
+		this.store.select(selectRegularSpendings)
+		.subscribe((spendings) => this.regularSpendings = spendings);
   }
+
+	updateRegularIncomes(regularSpendings: RegularSpending[]):void {
+		this.store.dispatch(regularSpendingsModified({regularSpendings}));
+	}
 
 }

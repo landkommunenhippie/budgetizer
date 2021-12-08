@@ -6,5 +6,9 @@ export const initialState: RegularIncome[] = [];
 
 export const regularIncomeReducer = createReducer(
 	initialState,
-	on(regularIncomesModified, regularIncomesFromServer, (state, {regularIncomes}) => regularIncomes )
+	on(
+		regularIncomesModified,
+		regularIncomesFromServer,
+		(state, {regularIncomes}) => (regularIncomes)
+	)
 )

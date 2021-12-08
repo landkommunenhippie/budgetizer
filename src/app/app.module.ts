@@ -33,17 +33,28 @@ import { YearBudgetOverviewComponent } from './domain/budget/components/year-bud
 import { RegularSpendingComponent } from './domain/spending/components/regular-spending/regular-spending.component';
 import { ItemAdderComponent } from './shared/components/item-adder/item-adder.component';
 import { EditableTableComponent } from './shared/components/editable-table/editable-table.component'
+import { DevStateCounterComponent } from './shared/components/dev-state-counter/dev-state-counter.component'
 
 /**
  * State
 */
 import { StoreModule } from '@ngrx/store';
 import { regularIncomeReducer } from './domain/income/state/regular-income.reducer'
+import { regularSpendingReducer } from './domain/spending/state/regular-spending.reducer'
 
+/**
+ * SERVICES
+*/
 import { RegularIncomeService } from './domain/income/services/regular-income.service';
-import { DevStateCounterComponent } from './shared/components/dev-state-counter/dev-state-counter.component'
-export function initApp(regularIncomeService: RegularIncomeService) {
-	return () => regularIncomeService.loadRegularIncomes();
+import { RegularSpendingService } from './domain/spending/services/regular-spending.service';
+
+export function initApp(
+	regularIncomeService: RegularIncomeService,
+	regularSpendingService: RegularSpendingService) {
+	return () => {
+		regularIncomeService.loadRegularIncomes();
+		regularSpendingService.loadRegularSpendings();
+	};
 }
 @NgModule({
   declarations: [
@@ -69,11 +80,17 @@ export function initApp(regularIncomeService: RegularIncomeService) {
 		MatInputModule,
 		MatDatepickerModule,
 		MatNativeDateModule,
-		StoreModule.forRoot({regularIncomes: regularIncomeReducer })
+		StoreModule.forRoot({regularIncomes: regularIncomeReducer, regularSpendings: regularSpendingReducer })
   ],
   providers: [
 		RegularIncomeService,
-		{provide: APP_INITIALIZER, useFactory: initApp, deps: [RegularIncomeService], multi: true}
+		RegularSpendingService,
+		{
+			provide: APP_INITIALIZER,
+			useFactory: initApp,
+			deps: [RegularIncomeService, RegularSpendingService],
+			multi: true
+		}
 
 	],
   bootstrap: [AppComponent]

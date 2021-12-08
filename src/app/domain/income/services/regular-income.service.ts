@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { RegularIncome } from "../models/regular-income.model";
+import { RegularIncome, regularIncomeByDataMap } from "../models/regular-income.model";
 import { Store } from '@ngrx/store';
 import { regularIncomesFromServer } from "../state/regular-income.action";
 
@@ -16,8 +16,8 @@ export class RegularIncomeService {
   loadRegularIncomes(): void {
     let regularIncomes: RegularIncome[] =   
 			[
-				{name: 'Lohn', description: 'zum ende des Monats', income: 6000},
-				{name: 'Kindergeld', description: 'Mitte des Monats', income: 420}
+				regularIncomeByDataMap({name: 'Lohn', description: 'zum ende des Monats', income: 6000}),
+				regularIncomeByDataMap({name: 'Kindergeld', description: 'Mitte des Monats', income: 420})
 			];
 			this.store.dispatch(regularIncomesFromServer({ regularIncomes }));
   }
