@@ -19,7 +19,7 @@ export class YearBudgetOverviewComponent implements OnInit {
 		{label: 'Kontostand Monatsende', valuePropertyName: 'accountAtEnd',valueInputType: 'number', editable: true},
 		{label: 'Sparen', valuePropertyName: 'saving',valueInputType: 'number', editable: true}
 	]
-	monthlyConscConsctructor = () => new MonthlyOverview(new Date(), 0, 0);
+	emptyItemFactory = () => new MonthlyOverview(new Date(), 0, 0);
 	
   constructor() {
 		this.months = [
