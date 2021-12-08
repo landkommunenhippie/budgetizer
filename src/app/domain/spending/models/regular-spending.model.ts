@@ -11,12 +11,12 @@ export class RegularSpending implements MutableState<RegularSpending> {
 	public get spendingAnually(): number { return this._spendingAnually; }
 
 	public set spendingMonthly(spendingMonthly: number) {
-		this._spendingMonthly = spendingMonthly;
+		this._spendingMonthly = spendingMonthly * 1;
 		this._spendingAnually = spendingMonthly * 12;	
 	}
 
 	public set spendingAnually(spendingAnually: number) {
-		this._spendingAnually = spendingAnually;
+		this._spendingAnually = spendingAnually * 1;
 		this._spendingMonthly = spendingAnually / 12;	
 	}
 

@@ -16,8 +16,8 @@ export class RegularIncomeService {
   loadRegularIncomes(): void {
     let regularIncomes: RegularIncome[] =   
 			[
-				regularIncomeByDataMap({name: 'Lohn', description: 'zum ende des Monats', income: 6000}),
-				regularIncomeByDataMap({name: 'Kindergeld', description: 'Mitte des Monats', income: 420})
+				regularIncomeByDataMap({name: 'Lohn', description: 'zum ende des Monats', _income: 6000}),
+				regularIncomeByDataMap({name: 'Kindergeld', description: 'Mitte des Monats', _income: 420})
 			];
 			this.store.dispatch(regularIncomesFromServer({ regularIncomes }));
   }

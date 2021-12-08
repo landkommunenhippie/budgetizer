@@ -9,7 +9,7 @@ export const selectRegularIncomesSum = createSelector(
     if (regularIncomes) {
 			return regularIncomes
 				.map(income => income.income)
-				.reduce(((acc: number, curr: number) => acc + curr), 0 );
+				.reduce(((acc: number, curr: number) => acc + curr ), 0 );
     } else {
       return -1;
     }

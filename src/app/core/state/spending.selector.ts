@@ -10,7 +10,7 @@ export const selectRegularSpendingsSumPerMonth = createSelector(
     if (regularSpendings) {
 			return regularSpendings
 				.map(spending => spending.spendingMonthly)
-				.reduce(((acc: number, curr: number) => acc + curr), 0 );
+				.reduce(((acc: number, curr: number) => acc + curr ), 0 );
     } else {
       return -1;
     }
