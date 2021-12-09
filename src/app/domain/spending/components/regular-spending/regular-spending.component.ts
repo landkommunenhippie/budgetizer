@@ -35,7 +35,7 @@ export class RegularSpendingComponent implements OnInit, OnDestroy {
 		this.ngDestroyed$.next(undefined);
 	}
 
-	updateRegularIncomes(regularSpendingViews: RegularSpendingViewModel[]):void {
+	updateRegularSpengings(regularSpendingViews: RegularSpendingViewModel[]):void {
 		let regularSpendings = regularSpendingViews.map(spendingView => spendingView.toRegularSpending());
 		this.store.dispatch(regularSpendingsModified({ regularSpendings }));
 	}

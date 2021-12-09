@@ -5,6 +5,9 @@ import { Store } from '@ngrx/store';
 import { Subject, takeUntil } from 'rxjs';
 import { selectRegularIncomesSum } from 'src/app/core/state/income.selector';
 import { selectRegularSpendingsSumPerMonth } from 'src/app/core/state/spending.selector';
+import { selectMonthlyAccountOverviews } from 'src/app/core/state/account.selector';
+import { MonthlyAccountOverview } from 'src/app/core/models/states.model';
+import { monthlyAccountOverviewsModified } from '../../state/monthly-account-overview.action';
 
 
 @Component({
@@ -14,7 +17,7 @@ import { selectRegularSpendingsSumPerMonth } from 'src/app/core/state/spending.s
 })
 export class YearAccountOverviewComponent implements OnInit {
 	
-	months: MonthlyAccountOverviewViewModel[];
+	months: MonthlyAccountOverviewViewModel[] = [];
 	displayedColumns: string[] = ['month', 'income', 'spending', 'accountAtStart', 'accountAtEnd', 'saving'];
 	tableDescription: EditableTableDescrption[] = [
 		{label: 'Monat', valuePropertyName: 'month', valueInputType: 'date', editable: true, displayProcessor: this.displayMonth},
@@ -30,13 +33,13 @@ export class YearAccountOverviewComponent implements OnInit {
 	private _regularSpendingsSum: number = -1;
 	private _ngDestroyed$ = new Subject();
 
-  constructor(private store: Store) {
-		this.months = [
-			new MonthlyAccountOverviewViewModel(new Date(2021, 1,  1), 10000, 8000, 150)
-		]
-	}
+  constructor(private store: Store) {	}
 
   ngOnInit(): void {
+		this.store.select(selectMonthlyAccountOverviews)
+			.pipe(takeUntil(this._ngDestroyed$))
+			.subscribe((monthlyAccountOverviews: MonthlyAccountOverview[]) => this.months = monthlyAccountOverviews.map(monthlyOverview => MonthlyAccountOverviewViewModel.createBy(monthlyOverview)));
+
 		this.store.select(selectRegularIncomesSum)
 			.pipe(takeUntil(this._ngDestroyed$))
 			.subscribe((sumOfRegulars: number) => this._regularIncomesSum = sumOfRegulars);
@@ -44,11 +47,15 @@ export class YearAccountOverviewComponent implements OnInit {
 		this.store.select(selectRegularSpendingsSumPerMonth)
 			.pipe(takeUntil(this._ngDestroyed$))
 			.subscribe((sumOfRegulars: number) => this._regularSpendingsSum = sumOfRegulars);
-  
-  }
+	}
 
 	ngOnDestroy(): void {
 		this._ngDestroyed$.next(undefined);
+	}
+
+	updateMonthlyAccountOverviews(monthlyAccountOverviewViews: MonthlyAccountOverviewViewModel[]):void {
+		let monthlyAccountOverviews = monthlyAccountOverviewViews.map(monthlyOverviewView => monthlyOverviewView.toMonthlyAccountOverview());
+		this.store.dispatch(monthlyAccountOverviewsModified({ monthlyAccountOverviews }));
 	}
 
 	displayMonth(date: Date) {

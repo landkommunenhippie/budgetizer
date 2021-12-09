@@ -41,19 +41,22 @@ import { DevStateCounterComponent } from './shared/components/dev-state-counter/
 import { StoreModule } from '@ngrx/store';
 import { regularIncomeReducer } from './domain/income/state/regular-income.reducer'
 import { regularSpendingReducer } from './domain/spending/state/regular-spending.reducer'
+import { monthlyAccountOverviewReducer } from './domain/account/state/monthly-account-overview.reducer';
 
 /**
  * SERVICES
 */
 import { RegularIncomeService } from './domain/income/services/regular-income.service';
 import { RegularSpendingService } from './domain/spending/services/regular-spending.service';
-
+import { MonthlyAccountOverviewService } from './domain/account/service/monthly-account-overview.service';
 export function initApp(
 	regularIncomeService: RegularIncomeService,
-	regularSpendingService: RegularSpendingService) {
+	regularSpendingService: RegularSpendingService,
+	monthlyAccountOverviewService: MonthlyAccountOverviewService) {
 	return () => {
 		regularIncomeService.loadRegularIncomes();
 		regularSpendingService.loadRegularSpendings();
+		monthlyAccountOverviewService.loadMonthlyAccountOverviews();
 	};
 }
 @NgModule({
@@ -80,13 +83,13 @@ export function initApp(
 		MatInputModule,
 		MatDatepickerModule,
 		MatNativeDateModule,
-		StoreModule.forRoot({regularIncomes: regularIncomeReducer, regularSpendings: regularSpendingReducer })
+		StoreModule.forRoot({regularIncomes: regularIncomeReducer, regularSpendings: regularSpendingReducer, monthlyAccountOverviews: monthlyAccountOverviewReducer })
   ],
   providers: [
 		{
 			provide: APP_INITIALIZER,
 			useFactory: initApp,
-			deps: [RegularIncomeService, RegularSpendingService],
+			deps: [RegularIncomeService, RegularSpendingService, MonthlyAccountOverviewService],
 			multi: true
 		}
 

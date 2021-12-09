@@ -3,5 +3,6 @@
 <app-editable-table
 	[table-data]="months"
 	[table-descriptions]="tableDescription"
-	[table-data-construction-function]="emptyItemFactory">
+	[table-data-construction-function]="emptyItemFactory"
+	(data-modified)="updateMonthlyAccountOverviews($event)">
 </app-editable-table>

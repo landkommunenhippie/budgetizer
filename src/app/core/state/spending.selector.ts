@@ -3,7 +3,6 @@ import { RegularSpending } from '../models/states.model';
 
 export const selectRegularSpendings = createFeatureSelector<RegularSpending[]>('regularSpendings');
 
-
 export const selectRegularSpendingsSumPerMonth = createSelector(
   selectRegularSpendings,
    (regularSpendings) => {
