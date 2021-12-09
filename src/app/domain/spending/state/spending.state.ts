@@ -1,4 +1,4 @@
-import { RegularSpending } from "../models/regular-spending.model";
+import { RegularSpending } from "src/app/core/models/states.model";
 
 export interface spendingState {
 	regularSpendings: RegularSpending[];

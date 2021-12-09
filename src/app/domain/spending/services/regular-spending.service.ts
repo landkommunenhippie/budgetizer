@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
-import { RegularSpending, RegularSpendingBuilder } from "../models/regular-spending.model";
 import { Store } from '@ngrx/store';
 import { regularSpendingsFromServer } from "../state/regular-spending.action";
+import { RegularSpending } from "src/app/core/models/states.model";
 
 @Injectable({ providedIn: 'root' })
 export class RegularSpendingService {
@@ -15,10 +15,10 @@ export class RegularSpendingService {
 	*/
   loadRegularSpendings(): void {
     let regularSpendings: RegularSpending[] =   
-		[
-			new RegularSpendingBuilder().name('Miete').description('zum Beginn des Monats').spendingMonthly(900).build(),
-			new RegularSpendingBuilder().name('Versicherung').description('zum Beginn des Monats').spendingAnually(400).build(),
-		];
+			[
+				{ name: 'Miete', description: 'zum Beginn des Monats', spendingMonthly: 900, spendingAnually: 900*12  },
+				{ name: 'Versicherung', description: 'zum Ende des Monats', spendingMonthly: 400/20, spendingAnually: 400  }
+			];
 			this.store.dispatch(regularSpendingsFromServer({ regularSpendings }));
   }
 }
