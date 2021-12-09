@@ -1,0 +1,23 @@
+{
+  "name": "budgetizer-express-server",
+  "version": "1.0.0",
+  "description": "server to save json-files representing data of budgetizer",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/landkommunenhippie/budgetizer.git"
+  },
+  "author": "Tobias Stubenrauch",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/landkommunenhippie/budgetizer/issues"
+  },
+  "homepage": "https://github.com/landkommunenhippie/budgetizer#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "fs": "^0.0.1-security"
+  }
+}
