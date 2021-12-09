@@ -5,7 +5,6 @@ import { Store } from '@ngrx/store';
 import { selectRegularIncomes } from '../../../../core/state/income.selector';
 import { regularIncomesModified } from '../../state/regular-income.action';
 import { Subject, takeUntil } from 'rxjs';
-import { RegularIncomeService } from '../../services/regular-income.service';
 
 @Component({
   selector: 'app-regular-income',
