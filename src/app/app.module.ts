@@ -29,7 +29,7 @@ import {MatNativeDateModule} from '@angular/material/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { RegularIncomeComponent } from './domain/income/components/regular-income/regular-income.component';
-import { YearBudgetOverviewComponent } from './domain/budget/components/year-budget-overview/year-budget-overview.component';
+import { YearAccountOverviewComponent } from './domain/account/components/year-account-overview/year-account-overview.component';
 import { RegularSpendingComponent } from './domain/spending/components/regular-spending/regular-spending.component';
 import { ItemAdderComponent } from './shared/components/item-adder/item-adder.component';
 import { EditableTableComponent } from './shared/components/editable-table/editable-table.component'
@@ -60,7 +60,7 @@ export function initApp(
   declarations: [
     AppComponent,
     RegularIncomeComponent,
-    YearBudgetOverviewComponent,
+    YearAccountOverviewComponent,
     RegularSpendingComponent,
     ItemAdderComponent,
     EditableTableComponent,

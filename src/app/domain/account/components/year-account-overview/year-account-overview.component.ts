@@ -8,11 +8,11 @@ import { selectRegularSpendingsSumPerMonth } from 'src/app/core/state/spending.s
 
 
 @Component({
-  selector: 'app-year-budget-overview',
-  templateUrl: './year-budget-overview.component.html',
-  styleUrls: ['./year-budget-overview.component.scss']
+  selector: 'app-year-account-overview',
+  templateUrl: './year-account-overview.component.html',
+  styleUrls: ['./year-account-overview.component.scss']
 })
-export class YearBudgetOverviewComponent implements OnInit {
+export class YearAccountOverviewComponent implements OnInit {
 	
 	months: MonthlyAccountOverviewViewModel[];
 	displayedColumns: string[] = ['month', 'income', 'spending', 'accountAtStart', 'accountAtEnd', 'saving'];

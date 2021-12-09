@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { YearBudgetOverviewComponent } from './year-budget-overview.component';
+import { YearAccountOverviewComponent } from './year-account-overview.component';
 
 describe('YearBudgetOverviewComponent', () => {
-  let component: YearBudgetOverviewComponent;
-  let fixture: ComponentFixture<YearBudgetOverviewComponent>;
+  let component: YearAccountOverviewComponent;
+  let fixture: ComponentFixture<YearAccountOverviewComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ YearBudgetOverviewComponent ]
+      declarations: [ YearAccountOverviewComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(YearBudgetOverviewComponent);
+    fixture = TestBed.createComponent(YearAccountOverviewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
