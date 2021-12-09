@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { EditableTableDescrption } from '../../models/editable-table-description.model';
 import { MatTableDataSource } from '@angular/material/table';
-import { MutableState } from 'src/app/core/state/mutable-state.model';
 
 @Component({
   selector: 'app-editable-table',
@@ -23,7 +22,7 @@ export class EditableTableComponent implements OnInit {
 	dataModified = new EventEmitter<any[]>();
 	
 	get tableData():any[] { return this._tableData; }
-	private _tableData:any[]|MutableState<any>[] = [];
+	private _tableData:any[] = [];
 	datasource: MatTableDataSource<any> = new MatTableDataSource(this.tableData);
 	displayedColumns = () => this.tableDescriptions.map(descr => descr.valuePropertyName).concat('actions'); 
 	hasEditableItems = () => this.tableDescriptions.findIndex(descr => descr.editable) >= 0;
@@ -57,8 +56,7 @@ export class EditableTableComponent implements OnInit {
 	toggleEditMode(rowIndex: number): void {
 		this.isEditMode[rowIndex] = !this.isEditMode[rowIndex];
 		if (this.isEditMode[rowIndex]) {
-			// TODO remove check when MutableState has been removed
-			this.tableDataInEditing[rowIndex] = this._tableData[rowIndex].clone ?  this._tableData[rowIndex].clone() : this._tableData[rowIndex];
+			this.tableDataInEditing[rowIndex] = this._tableData[rowIndex];
 		} else {
 			this.tableDataInEditing.splice(rowIndex, 1);
 		}

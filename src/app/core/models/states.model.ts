@@ -10,3 +10,10 @@ export interface RegularSpending {
 	spendingMonthly: number
 	spendingAnually: number
 }
+
+export interface MonthlyAccountOverview {
+	month: Date,
+	accountAtStart: number,
+	accountAtEnd: number,
+	saving: number
+}

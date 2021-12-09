@@ -27,7 +27,7 @@ export class RegularSpendingViewModel implements RegularSpending {
 			new RegularSpendingViewModel(regularSpending.name, regularSpending.description, regularSpending.spendingMonthly, regularSpending.spendingAnually);
 
 	public toRegularSpending(): RegularSpending {
-		return {name: this.name, description: this.description, spendingMonthly: this._spendingMonthly, spendingAnually: this._spendingAnually};
+		return { name: this.name, description: this.description, spendingMonthly: this._spendingMonthly, spendingAnually: this._spendingAnually };
 	}
 }
 

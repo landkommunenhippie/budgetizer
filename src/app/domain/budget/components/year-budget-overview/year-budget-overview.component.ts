@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MonthlyOverview } from '../../models/monthly-overview.model';
+import { MonthlyAccountOverviewViewModel } from '../../models/monthly-account-overview-view.model';
 import { EditableTableDescrption } from 'src/app/shared/models/editable-table-description.model';
 import { Store } from '@ngrx/store';
 import { Subject, takeUntil } from 'rxjs';
@@ -14,7 +14,7 @@ import { selectRegularSpendingsSumPerMonth } from 'src/app/core/state/spending.s
 })
 export class YearBudgetOverviewComponent implements OnInit {
 	
-	months: MonthlyOverview[];
+	months: MonthlyAccountOverviewViewModel[];
 	displayedColumns: string[] = ['month', 'income', 'spending', 'accountAtStart', 'accountAtEnd', 'saving'];
 	tableDescription: EditableTableDescrption[] = [
 		{label: 'Monat', valuePropertyName: 'month', valueInputType: 'date', editable: true, displayProcessor: this.displayMonth},
@@ -24,7 +24,7 @@ export class YearBudgetOverviewComponent implements OnInit {
 		{label: 'Kontostand Monatsende', valuePropertyName: 'accountAtEnd',valueInputType: 'number', editable: true},
 		{label: 'Sparen', valuePropertyName: 'saving',valueInputType: 'number', editable: true}
 	]
-	emptyItemFactory = () => new MonthlyOverview(new Date(), 0, 0);
+	emptyItemFactory = () => new MonthlyAccountOverviewViewModel(new Date(), 0, 0, 0);
 
 	private _regularIncomesSum: number = -1;
 	private _regularSpendingsSum: number = -1;
@@ -32,7 +32,7 @@ export class YearBudgetOverviewComponent implements OnInit {
 
   constructor(private store: Store) {
 		this.months = [
-			new MonthlyOverview(new Date(2021, 1,  1), 6000, 3000)
+			new MonthlyAccountOverviewViewModel(new Date(2021, 1,  1), 10000, 8000, 150)
 		]
 	}
 
@@ -56,11 +56,11 @@ export class YearBudgetOverviewComponent implements OnInit {
 		return new Intl.DateTimeFormat('de-DE', options).format(date); 
 	}
 
-	getIncomesOfMonth(monthlyOverview: MonthlyOverview): number {
+	getIncomesOfMonth(monthlyOverview: MonthlyAccountOverviewViewModel): number {
 		return this._regularIncomesSum;
 	}
 
-	getSpendingsOfMonth(monthlyOverview: MonthlyOverview): number {
+	getSpendingsOfMonth(monthlyOverview: MonthlyAccountOverviewViewModel): number {
 		return this._regularSpendingsSum;
 	}
 
