@@ -49,6 +49,7 @@ import { monthlyAccountOverviewReducer } from './domain/account/state/monthly-ac
 import { RegularIncomeService } from './domain/income/services/regular-income.service';
 import { RegularSpendingService } from './domain/spending/services/regular-spending.service';
 import { MonthlyAccountOverviewService } from './domain/account/service/monthly-account-overview.service';
+import { HttpClientModule } from '@angular/common/http';
 export function initApp(
 	regularIncomeService: RegularIncomeService,
 	regularSpendingService: RegularSpendingService,
@@ -75,6 +76,7 @@ export function initApp(
     AppRoutingModule,
     BrowserAnimationsModule,
 		FlexLayoutModule,
+		HttpClientModule,
 		MatTableModule,
 		MatToolbarModule,
 		MatButtonModule,

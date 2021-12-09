@@ -1,4 +1,5 @@
 const express = require('express')
+var cors = require('cors');
 const fs = require('fs')
 const app = express()
 const port = 3000
@@ -6,6 +7,7 @@ const port = 3000
 const BUDGETIZER_JSON_DIR = './data'
 
 app.use(express.json());
+app.use(cors());
 
 app.put('/:user/:type', (req, res) => {
 	console.log(JSON.stringify(req.body));
