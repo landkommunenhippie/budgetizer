@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Store } from '@ngrx/store';
 import { regularIncomesFromServer } from "../state/regular-income.action";
-import { RegularIncome } from "src/app/core/models/regular-income.model";
+import { RegularIncome } from "src/app/core/models/states.model";
 
 @Injectable({ providedIn: 'root' })
 export class RegularIncomeService {

@@ -1,5 +1,5 @@
 import { createSelector, createFeatureSelector } from '@ngrx/store'
-import { RegularIncome } from '../models/regular-income.model';
+import { RegularIncome } from '../models/states.model';
 
 export const selectRegularIncomes = createFeatureSelector<RegularIncome[]>('regularIncomes');
 

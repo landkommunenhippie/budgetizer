@@ -1,4 +1,4 @@
-import { RegularIncome } from "src/app/core/models/regular-income.model";
+import { RegularIncome } from "src/app/core/models/states.model";
 
 export class RegularIncomeViewModel implements RegularIncome {
 	constructor(
