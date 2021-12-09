@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store'
-import { RegularIncome } from '../models/regular-income.model'
+import { RegularIncome } from 'src/app/core/models/regular-income.model'
 
 export const regularIncomesFromServer = createAction(
 	'[Regular-Income List From Server] Regular-Incomes loaded from Server',

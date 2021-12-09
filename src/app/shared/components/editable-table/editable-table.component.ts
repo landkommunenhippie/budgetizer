@@ -57,7 +57,8 @@ export class EditableTableComponent implements OnInit {
 	toggleEditMode(rowIndex: number): void {
 		this.isEditMode[rowIndex] = !this.isEditMode[rowIndex];
 		if (this.isEditMode[rowIndex]) {
-			this.tableDataInEditing[rowIndex] = this._tableData[rowIndex].clone();
+			// TODO remove check when MutableState has been removed
+			this.tableDataInEditing[rowIndex] = this._tableData[rowIndex].clone ?  this._tableData[rowIndex].clone() : this._tableData[rowIndex];
 		} else {
 			this.tableDataInEditing.splice(rowIndex, 1);
 		}

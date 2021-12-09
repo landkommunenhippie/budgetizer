@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MonthlyOverview } from '../../models/monthly-overview.model';
 import { EditableTableDescrption } from 'src/app/shared/models/editable-table-description.model';
-import { RegularIncome } from 'src/app/domain/income/models/regular-income.model';
 import { Store } from '@ngrx/store';
 import { Subject, takeUntil } from 'rxjs';
 import { selectRegularIncomesSum } from 'src/app/core/state/income.selector';

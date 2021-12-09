@@ -1,4 +1,4 @@
-import { RegularIncome } from "../models/regular-income.model";
+import { RegularIncome } from "src/app/core/models/regular-income.model";
 
 export interface incomeState {
 	regularIncomes: RegularIncome[];

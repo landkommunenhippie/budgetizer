@@ -1,10 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { RegularIncome, regularIncomeConst } from '../../models/regular-income.model';
+import { RegularIncomeViewModel, regularIncomeConst } from '../../models/regular-income-view.model';
 import { EditableTableDescrption } from 'src/app/shared/models/editable-table-description.model';
 import { Store } from '@ngrx/store';
 import { selectRegularIncomes } from '../../../../core/state/income.selector';
 import { regularIncomesModified } from '../../state/regular-income.action';
 import { Subject, takeUntil } from 'rxjs';
+import { RegularIncomeService } from '../../services/regular-income.service';
 
 @Component({
   selector: 'app-regular-income',
@@ -13,7 +14,7 @@ import { Subject, takeUntil } from 'rxjs';
 })
 export class RegularIncomeComponent implements OnInit, OnDestroy {
 
-	regularIncomes: RegularIncome[] = [];
+	regularIncomes: RegularIncomeViewModel[] = [];
 	tableDescription: EditableTableDescrption[] = [
 		{label: 'Name', valuePropertyName: 'name', valueInputType: 'text', editable: true},
 		{label: 'Beschreibung', valuePropertyName: 'description',valueInputType: 'text', editable: true},
@@ -28,14 +29,15 @@ export class RegularIncomeComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
 		this.store.select(selectRegularIncomes)
 			.pipe(takeUntil(this.ngDestroyed$))
-			.subscribe((incomes) => this.regularIncomes = incomes);
+			.subscribe((incomes) => this.regularIncomes = incomes.map(income => RegularIncomeViewModel.createBy(income)));
 	}
 
 	ngOnDestroy(): void {
 		this.ngDestroyed$.next(undefined);
 	}
 
-	updateRegularIncomes(regularIncomes: RegularIncome[]):void {
+	updateRegularIncomes(regularIncomeViews: RegularIncomeViewModel[]):void {
+		let regularIncomes =  regularIncomeViews.map(regIncomeViewModel => regIncomeViewModel.toRegularIncome())
 		this.store.dispatch(regularIncomesModified({regularIncomes}));
 	}
 }
