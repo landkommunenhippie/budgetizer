@@ -21,7 +21,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import {MatNativeDateModule} from '@angular/material/core';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 /**
  * Custom 
@@ -50,6 +51,7 @@ import { RegularIncomeService } from './domain/income/services/regular-income.se
 import { RegularSpendingService } from './domain/spending/services/regular-spending.service';
 import { MonthlyAccountOverviewService } from './domain/account/service/monthly-account-overview.service';
 import { HttpClientModule } from '@angular/common/http';
+
 export function initApp(
 	regularIncomeService: RegularIncomeService,
 	regularSpendingService: RegularSpendingService,
@@ -85,6 +87,7 @@ export function initApp(
 		MatInputModule,
 		MatDatepickerModule,
 		MatNativeDateModule,
+		MatSnackBarModule,
 		StoreModule.forRoot({regularIncomes: regularIncomeReducer, regularSpendings: regularSpendingReducer, monthlyAccountOverviews: monthlyAccountOverviewReducer })
   ],
   providers: [
