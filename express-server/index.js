@@ -10,14 +10,29 @@ app.use(express.json());
 app.use(cors());
 
 app.get('/:user/:type', (req, res) => {
-	fs.readFile(`${BUDGETIZER_JSON_DIR}/${req.params.user}-${req.params.type}.json`, 'UTF-8', function(err, data) {
-    if(err) {
-        console.log("error", err);
-				throw new Error(err);
+	let filePath = `${BUDGETIZER_JSON_DIR}/${req.params.user}-${req.params.type}.json`;
+	fs.stat(filePath , function(err, stat) {
+    console.log(err, stat);
+		if(err == null) {
+			console.log("READ")
+			fs.readFile(filePath, 'UTF-8', function(err, data) {
+				if(err) {
+						console.log("error", err);
+						throw new Error(err);
+				}
+				console.log("success", data)
+				res.send(data);
+			});
+    } else if(err.code === 'ENOENT') {
+        // file does not exist
+        res.send([]);
+    } else {
+			console.log("error", err);
+			throw new Error(err);
+	
     }
-		console.log("success", data)
-    res.send(data);
-}); 
+});
+	 
 })
 
 
