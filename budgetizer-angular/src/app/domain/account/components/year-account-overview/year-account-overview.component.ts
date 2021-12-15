@@ -58,9 +58,11 @@ export class YearAccountOverviewComponent implements OnInit {
 		this.store.dispatch(monthlyAccountOverviewsModified({ monthlyAccountOverviews }));
 	}
 
-	displayMonth(date: Date) {
+	displayMonth(date: Date|string) {
 		let options: Intl.DateTimeFormatOptions = {month: 'short'};
-		return new Intl.DateTimeFormat('de-DE', options).format(date); 
+		let dateToParse: Date = typeof date === 'string' ?  new Date(date) : date;
+		
+		return new Intl.DateTimeFormat('de-DE', options).format(dateToParse); 
 	}
 
 	getIncomesOfMonth(monthlyOverview: MonthlyAccountOverviewViewModel): number {

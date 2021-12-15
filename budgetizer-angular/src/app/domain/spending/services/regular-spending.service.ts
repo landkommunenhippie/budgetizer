@@ -11,7 +11,6 @@ export class RegularSpendingService {
 		private _store: Store,
 		private _httpService: HttpService) { }
 	
-	
 	/**
 	 * Procedure to load initial regularSpendings and store them
 	 * 
@@ -24,13 +23,13 @@ export class RegularSpendingService {
 			this._store.dispatch(regularSpendingsFromServer({ regularSpendings }));
 			// listen to store to sync results		
 			this._store.select(selectRegularSpendings)
-				.subscribe((spendings) => { this.syncRegularIncomes(spendings) } );		
+				.subscribe((spendings) => { this.syncRegularSpendings(spendings) } );		
 			}
 		);
   }
 
 
-	syncRegularIncomes(regularSpendings: RegularSpending[]) {
+	syncRegularSpendings(regularSpendings: RegularSpending[]) {
 		this._httpService.doPut('tst/regular-spendings', regularSpendings);
 	}
 }
