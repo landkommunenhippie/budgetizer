@@ -14,19 +14,19 @@ export class RegularIncomeService {
 	
 	/**
 	 * Procedure to load initial regularIncomes and store them
-	 * Dummy Impl for developing
-	 * Replace with HTTP-Call later
 	 * 
 	*/
   loadRegularIncomes(): void {
-    this._httpService.doGetAndApply('tst/regular-incomes', (regularIncomes: RegularIncome[]) => {
+    this._httpService.doGetAndApply(
+			'tst/regular-incomes',
+			(regularIncomes: RegularIncome[]) => {
 			// dispatch results to store	
 			this._store.dispatch(regularIncomesFromServer({ regularIncomes }));
 			// listen to store to sync results		
 			this._store.select(selectRegularIncomes)
 				.subscribe((incomes) => { this.syncRegularIncomes(incomes) } );
-		
-		});
+			}
+		);
   }
 
 	syncRegularIncomes(regularIncomes: RegularIncome[]) {
