@@ -30,17 +30,28 @@
 							step="0.01">
 
 						<ng-container *ngIf="tableDesc.valueInputType === 'date'">
+							<ng-container *ngIf="tableDesc.dateMonthOnly === true">	
 								<input
 									matInput
 									[matDatepicker]="picker"
 									[(ngModel)]="tableDataInEditing[rowIdx][tableDesc.valuePropertyName]"
 									(click)="openDatePicker(picker)">
-								<mat-datepicker
-									#picker
-									startView="year"
-									(monthSelected)="closeDatePicker($event, picker, tableDataInEditing[rowIdx], tableDesc.valuePropertyName)">
-								</mat-datepicker>
-						 
+									<mat-datepicker
+										#picker
+										startView="year"
+										(monthSelected)="closeDatePicker($event, picker, tableDataInEditing[rowIdx], tableDesc.valuePropertyName)">
+									</mat-datepicker>
+							</ng-container>
+
+							<ng-container *ngIf="tableDesc.dateMonthOnly !== true">	
+								<input
+									matInput
+									[matDatepicker]="picker"
+									[(ngModel)]="tableDataInEditing[rowIdx][tableDesc.valuePropertyName]"
+									(click)="openDatePicker(picker)">
+									<mat-datepicker #picker>
+									</mat-datepicker>
+							</ng-container>
 						</ng-container>
 					</mat-form-field>	
 				</td>

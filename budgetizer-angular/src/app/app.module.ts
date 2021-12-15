@@ -23,6 +23,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatTabsModule } from '@angular/material/tabs';
 
 /**
  * Custom 
@@ -41,6 +42,7 @@ import { DevStateCounterComponent } from './shared/components/dev-state-counter/
 */
 import { StoreModule } from '@ngrx/store';
 import { regularIncomeReducer } from './domain/income/state/regular-income.reducer'
+import { oneTimeIncomeReducer } from './domain/income/state/one-time-income.reducer'
 import { regularSpendingReducer } from './domain/spending/state/regular-spending.reducer'
 import { monthlyAccountOverviewReducer } from './domain/account/state/monthly-account-overview.reducer';
 
@@ -51,13 +53,18 @@ import { RegularIncomeService } from './domain/income/services/regular-income.se
 import { RegularSpendingService } from './domain/spending/services/regular-spending.service';
 import { MonthlyAccountOverviewService } from './domain/account/service/monthly-account-overview.service';
 import { HttpClientModule } from '@angular/common/http';
+import { IncomeTabViewComponent } from './domain/income/components/income-tab-view/income-tab-view.component';
+import { OneTimeIncomeComponent } from './domain/income/components/one-time-income/one-time-income.component';
+import { OneTimeIncomeService } from './domain/income/services/one-time-income.service';
 
 export function initApp(
 	regularIncomeService: RegularIncomeService,
+	oneTimeInvomceService: OneTimeIncomeService,
 	regularSpendingService: RegularSpendingService,
 	monthlyAccountOverviewService: MonthlyAccountOverviewService) {
 	return () => {
 		regularIncomeService.loadRegularIncomes();
+		oneTimeInvomceService.loadOneTimeIncomes();
 		regularSpendingService.loadRegularSpendings();
 		monthlyAccountOverviewService.loadMonthlyAccountOverviews();
 	};
@@ -71,6 +78,8 @@ export function initApp(
     ItemAdderComponent,
     EditableTableComponent,
     DevStateCounterComponent,
+    IncomeTabViewComponent,
+    OneTimeIncomeComponent,
   ],
   imports: [
     BrowserModule,
@@ -88,13 +97,14 @@ export function initApp(
 		MatDatepickerModule,
 		MatNativeDateModule,
 		MatSnackBarModule,
-		StoreModule.forRoot({regularIncomes: regularIncomeReducer, regularSpendings: regularSpendingReducer, monthlyAccountOverviews: monthlyAccountOverviewReducer })
+		MatTabsModule,
+		StoreModule.forRoot({regularIncomes: regularIncomeReducer, oneTimeIncomes: oneTimeIncomeReducer, regularSpendings: regularSpendingReducer, monthlyAccountOverviews: monthlyAccountOverviewReducer })
   ],
   providers: [
 		{
 			provide: APP_INITIALIZER,
 			useFactory: initApp,
-			deps: [RegularIncomeService, RegularSpendingService, MonthlyAccountOverviewService],
+			deps: [RegularIncomeService, OneTimeIncomeService, RegularSpendingService, MonthlyAccountOverviewService],
 			multi: true
 		}
 

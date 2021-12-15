@@ -26,4 +26,8 @@ export interface EditableTableDescrption {
 	 * Specification of the way a value shall be displayed when not in editing mode
 	*/
 	displayProcessor?: Function
+	/**
+	 * Specification whether if valueInputType is set to date only months shall be choosable
+	*/
+	dateMonthOnly?: boolean
 }

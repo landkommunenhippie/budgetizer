@@ -21,7 +21,6 @@ export class RegularIncomeComponent implements OnInit, OnDestroy {
 	]
 	emptyItemFactory = regularIncomeConst;
 	private ngDestroyed$ = new Subject();
-
 	
 	constructor(private store: Store) { }
 	
@@ -36,7 +35,7 @@ export class RegularIncomeComponent implements OnInit, OnDestroy {
 	}
 
 	updateRegularIncomes(regularIncomeViews: RegularIncomeViewModel[]):void {
-		let regularIncomes =  regularIncomeViews.map(regIncomeViewModel => regIncomeViewModel.toRegularIncome())
+		let regularIncomes = regularIncomeViews.map(regIncomeViewModel => regIncomeViewModel.toRegularIncome())
 		this.store.dispatch(regularIncomesModified({regularIncomes}));
 	}
 }

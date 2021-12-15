@@ -1,11 +1,9 @@
 import { createReducer, on } from '@ngrx/store';
-import { RegularIncome } from 'src/app/core/models/states.model';
 import { regularIncomesModified, regularIncomesFromServer } from './regular-income.action'
-
-export const initialState: RegularIncome[] = [];
+import { IncomeState } from 'src/app/domain/income/state/income.state'
 
 export const regularIncomeReducer = createReducer(
-	initialState,
+	IncomeState.regularIncomes,
 	on(
 		regularIncomesModified,
 		regularIncomesFromServer,

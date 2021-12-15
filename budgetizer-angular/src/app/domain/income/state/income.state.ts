@@ -1,5 +1,6 @@
-import { RegularIncome } from "src/app/core/models/regular-income.model";
+import { OneTimeIncome, RegularIncome } from "src/app/core/models/states.model";
 
-export interface incomeState {
-	regularIncomes: RegularIncome[];
+export class IncomeState {
+	public static regularIncomes: RegularIncome[] = []; 
+	public static oneTimeIncomes: OneTimeIncome[] = []; 
 }

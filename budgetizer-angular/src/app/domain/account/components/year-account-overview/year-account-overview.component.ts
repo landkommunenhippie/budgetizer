@@ -3,7 +3,7 @@ import { MonthlyAccountOverviewViewModel } from '../../models/monthly-account-ov
 import { EditableTableDescrption } from 'src/app/shared/models/editable-table-description.model';
 import { Store } from '@ngrx/store';
 import { Subject, takeUntil } from 'rxjs';
-import { selectRegularIncomesSum } from 'src/app/core/state/income.selector';
+import { selectIncomesSumofMonth } from 'src/app/core/state/income.selector';
 import { selectRegularSpendingsSumPerMonth } from 'src/app/core/state/spending.selector';
 import { selectMonthlyAccountOverviews } from 'src/app/core/state/account.selector';
 import { MonthlyAccountOverview } from 'src/app/core/models/states.model';
@@ -19,7 +19,7 @@ export class YearAccountOverviewComponent implements OnInit {
 	months: MonthlyAccountOverviewViewModel[] = [];
 	displayedColumns: string[] = ['month', 'income', 'spending', 'accountAtStart', 'accountAtEnd', 'saving'];
 	tableDescription: EditableTableDescrption[] = [
-		{label: 'Monat', valuePropertyName: 'month', valueInputType: 'date', editable: true, displayProcessor: this.displayMonth},
+		{label: 'Monat', valuePropertyName: 'month', valueInputType: 'date', editable: true, dateMonthOnly: true, displayProcessor: this.displayMonth},
 		{label: 'Einnahmen', valuePropertyName: 'calc_income',valueInputType: 'number',  dataSource: this.getIncomesOfMonth.bind(this)},
 		{label: 'Ausgaben', valuePropertyName: 'calc_spending',valueInputType: 'number',  dataSource: this.getSpendingsOfMonth.bind(this)},
 		{label: 'Monatsbudget', valuePropertyName: 'calc_monthly_budget', valueInputType: 'number', dataSource: this.calcMonthlyBudget.bind(this)},
@@ -29,7 +29,7 @@ export class YearAccountOverviewComponent implements OnInit {
 	]
 	emptyItemFactory = () => new MonthlyAccountOverviewViewModel(new Date(), 0, 0, 0);
 
-	private _regularIncomesSum: number = -1;
+	private _regularIncomesSum: any = new Map;
 	private _regularSpendingsSum: number = -1;
 	private _ngDestroyed$ = new Subject();
 	
@@ -40,9 +40,9 @@ export class YearAccountOverviewComponent implements OnInit {
 			.pipe(takeUntil(this._ngDestroyed$))
 			.subscribe((monthlyAccountOverviews: MonthlyAccountOverview[]) => this.months = monthlyAccountOverviews.map(monthlyOverview => MonthlyAccountOverviewViewModel.createBy(monthlyOverview)));
 
-		this.store.select(selectRegularIncomesSum)
+		this.store.select(selectIncomesSumofMonth)
 			.pipe(takeUntil(this._ngDestroyed$))
-			.subscribe((sumOfRegulars: number) => this._regularIncomesSum = sumOfRegulars);
+			.subscribe((sumOfRegulars: any) => this._regularIncomesSum = sumOfRegulars);
 
 		this.store.select(selectRegularSpendingsSumPerMonth)
 			.pipe(takeUntil(this._ngDestroyed$))
@@ -66,8 +66,8 @@ export class YearAccountOverviewComponent implements OnInit {
 	}
 
 	getIncomesOfMonth(monthlyOverview: MonthlyAccountOverviewViewModel): number {
-		// TODO add choosing of month when irregulars are defined
-		return this._regularIncomesSum;
+		let dateToParse: Date = typeof monthlyOverview.month === 'string' ?  new Date(monthlyOverview.month) : monthlyOverview.month;
+		return this._regularIncomesSum[dateToParse.getMonth()];
 	}
 
 	getSpendingsOfMonth(monthlyOverview: MonthlyAccountOverviewViewModel): number {
@@ -77,7 +77,9 @@ export class YearAccountOverviewComponent implements OnInit {
 
 	calcMonthlyBudget(monthlyOverview: MonthlyAccountOverviewViewModel): number {
 		// TODO add choosing of month when irregulars are defined
-			return this._regularIncomesSum - this._regularSpendingsSum;
+		let dateToParse: Date = typeof monthlyOverview.month === 'string' ?  new Date(monthlyOverview.month) : monthlyOverview.month;
+			
+		return this._regularIncomesSum[dateToParse.getMonth()] - this._regularSpendingsSum;
  	}
 
 }

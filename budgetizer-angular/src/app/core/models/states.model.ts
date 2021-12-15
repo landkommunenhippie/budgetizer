@@ -4,6 +4,13 @@ export interface RegularIncome {
 	income: number
 }
 
+export interface OneTimeIncome {
+	name: string,
+	description: string,
+	date: Date,
+	income: number
+}
+
 export interface RegularSpending {
 	name: string,
 	description: string,
