@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store'
 import { selectRegularIncomes } from 'src/app/core/state/income.selector';
 import { selectRegularSpendings } from 'src/app/core/state/spending.selector';
 import { selectMonthlyAccountOverviews } from 'src/app/core/state/account.selector';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-dev-state-counter',
@@ -14,7 +15,7 @@ export class DevStateCounterComponent implements OnInit {
 	regularIncomes: string[] = [];
 	regularSpendings: string[] = [];
 	monthlyAccountOverviews: string[] = [];
-
+	stateDebugEnabled = environment.stateDebugEnabled;
   constructor(private store: Store) { }
 
   ngOnInit(): void {
