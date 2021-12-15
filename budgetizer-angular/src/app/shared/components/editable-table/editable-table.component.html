@@ -8,23 +8,23 @@
 				<th mat-header-cell *matHeaderCellDef> {{ tableDesc.label }} </th>
 				<td mat-cell *matCellDef="let rowData; let rowIdx = index;"> 
 
-					<span *ngIf="!tableDesc.editable || !isEditMode[rowIdx]">
+					<span *ngIf="!tableDesc.editable || tableDesc.dataSource  || !isEditMode[rowIdx]">
 						{{   getDisplayValue(rowData, tableDesc.valuePropertyName, tableDesc.displayProcessor, tableDesc.dataSource) }}
 					</span>
 
 					<mat-form-field
-						*ngIf="tableDesc.editable && isEditMode[rowIdx]"
+						*ngIf="(tableDesc.editable && !tableDesc.dataSource) && isEditMode[rowIdx]"
 						class="table-edit-mode"
 						appearance="standard">
 						<input *ngIf="tableDesc.valueInputType === undefined || tableDesc.valueInputType === 'text'"
 							matInput
-							[(ngModel)]="tableDesc.dataSource ? tableDesc.dataSource(tableDataInEditing[rowIdx]) : tableDataInEditing[rowIdx][tableDesc.valuePropertyName]"
+							[(ngModel)]="tableDataInEditing[rowIdx][tableDesc.valuePropertyName]"
 							type="{{tableDesc.valueInputType}}"
 							placeholder="{{tableDesc.label}}">
 
 						<input *ngIf="tableDesc.valueInputType === 'number'"
 							matInput
-							[(ngModel)]="tableDesc.dataSource ? tableDesc.dataSource(tableDataInEditing[rowIdx]) : tableDataInEditing[rowIdx][tableDesc.valuePropertyName]"
+							[(ngModel)]="tableDataInEditing[rowIdx][tableDesc.valuePropertyName]"
 							type="{{tableDesc.valueInputType}}" 
 							placeholder="{{tableDesc.label}}"
 							step="0.01">
@@ -33,7 +33,7 @@
 								<input
 									matInput
 									[matDatepicker]="picker"
-									[(ngModel)]="tableDesc.dataSource ? tableDesc.dataSource(tableDataInEditing[rowIdx]) : tableDataInEditing[rowIdx][tableDesc.valuePropertyName]"
+									[(ngModel)]="tableDataInEditing[rowIdx][tableDesc.valuePropertyName]"
 									(click)="openDatePicker(picker)">
 								<mat-datepicker
 									#picker
