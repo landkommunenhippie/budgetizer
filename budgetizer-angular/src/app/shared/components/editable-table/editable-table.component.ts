@@ -1,14 +1,15 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { EditableTableDescrption } from '../../models/editable-table-description.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { formatNumber } from '@angular/common';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-editable-table',
   templateUrl: './editable-table.component.html',
   styleUrls: ['./editable-table.component.scss'],
 })
-export class EditableTableComponent implements OnInit {
+export class EditableTableComponent implements OnInit, AfterViewInit {
 
 	@Input('table-data') set tableData(incomingtableData: any[]) {
 		this._tableData = [...incomingtableData];
@@ -18,10 +19,22 @@ export class EditableTableComponent implements OnInit {
 	tableDescriptions: EditableTableDescrption[] = [];
 	@Input('table-data-construction-function')
 	tableDataConstructionFunction: Function = () => null;
+	@Input('default-sort')
+	defaultSort!: string;
 	
 	@Output('data-modified')
 	dataModified = new EventEmitter<any[]>();
 	
+	@ViewChild(MatSort)
+	sort!: MatSort;
+	getInitialSort = () => {
+		let initialSort = this.tableDescriptions.find(descr => descr.initialSort); 
+		if (initialSort) {
+			return initialSort.valuePropertyName;
+		}
+		return null;
+	};
+
 	get tableData():any[] { return this._tableData; }
 	private _tableData:any[] = [];
 	datasource: MatTableDataSource<any> = new MatTableDataSource(this.tableData);
@@ -34,8 +47,10 @@ export class EditableTableComponent implements OnInit {
 	constructor() {
 	}
 
-  ngOnInit(): void {
+  ngOnInit(): void { }
 
+	ngAfterViewInit() {
+		this.datasource.sort = this.sort;
 	}
 
 	addItem(): void {

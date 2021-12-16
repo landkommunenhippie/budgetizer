@@ -21,13 +21,22 @@ export interface EditableTableDescrption {
 	 * specification of the source of a value that shall be displayed. Value cannot be modified since it cannot be bound.
 	 * For informative calculations only. The function is passed a rowDataObject
 	*/
-	dataSource?: Function
+	dataSource?: Function,
 	/**
 	 * Specification of the way a value shall be displayed when not in editing mode
 	*/
-	displayProcessor?: Function
+	displayProcessor?: Function,
 	/**
 	 * Specification whether if valueInputType is set to date only months shall be choosable
 	*/
-	dateMonthOnly?: boolean
+	dateMonthOnly?: boolean,
+	/**
+	 * Specification if this coloumn is used for sorting
+	*/
+	sortable?: boolean
+	/**
+	 * Specification of the initial sort property
+	 * If multiple descriptions are set to true, the first one found will be used
+	 */
+	initialSort?: boolean
 }

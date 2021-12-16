@@ -1,11 +1,16 @@
-<table mat-table [dataSource]="datasource" class="mat-elevation-z8 editable-table">
+<table mat-table [dataSource]="datasource" class="mat-elevation-z8 editable-table" matSort matSortActive="{{getInitialSort()}}" matSortDirection="asc">
 	<tr mat-header-row *matHeaderRowDef="displayedColumns()"></tr>
 	<tr mat-row *matRowDef="let row; columns: displayedColumns(); let rowIdx = index;"></tr>
 	
 	<ng-container *ngFor="let tableDesc of tableDescriptions"> 
 			
 			<ng-container matColumnDef="{{ tableDesc.valuePropertyName }}">
-				<th mat-header-cell *matHeaderCellDef> {{ tableDesc.label }} </th>
+				<ng-container *ngIf="tableDesc.sortable">
+					<th mat-header-cell *matHeaderCellDef mat-sort-header> {{ tableDesc.label }} </th>
+				</ng-container>
+				<ng-container *ngIf="!tableDesc.sortable">
+					<th mat-header-cell *matHeaderCellDef> {{ tableDesc.label }} </th>
+				</ng-container>
 				<td mat-cell *matCellDef="let rowData; let rowIdx = index;"> 
 
 					<span *ngIf="!tableDesc.editable || tableDesc.dataSource  || !isEditMode[rowIdx]">
