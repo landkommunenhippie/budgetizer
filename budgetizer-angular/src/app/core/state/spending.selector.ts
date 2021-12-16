@@ -1,5 +1,4 @@
 import {createSelector, createFeatureSelector} from '@ngrx/store'
-import { oneTimeSpendingsFromServer } from 'src/app/domain/spending/state/one-time-spending.action';
 import { OneTimeSpending, RegularSpending } from '../models/states.model';
 
 /**

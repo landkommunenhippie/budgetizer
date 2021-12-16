@@ -71,17 +71,15 @@ export class YearAccountOverviewComponent implements OnInit {
 	}
 
 	getSpendingsOfMonth(monthlyOverview: MonthlyAccountOverviewViewModel): number {
-		// TODO add choosing of month when irregulars are defined
 		let dateToParse: Date = typeof monthlyOverview.month === 'string' ?  new Date(monthlyOverview.month) : monthlyOverview.month;
 		
 		return this._spendingSumPerMonth[dateToParse.getMonth()];
 	}
 
 	calcMonthlyBudget(monthlyOverview: MonthlyAccountOverviewViewModel): number {
-		// TODO add choosing of month when irregulars are defined
 		let dateToParse: Date = typeof monthlyOverview.month === 'string' ?  new Date(monthlyOverview.month) : monthlyOverview.month;
 			
-		return this._incomesSumPerMonth[dateToParse.getMonth()] - this._spendingSumPerMonth[dateToParse.getMonth()];
+		return this._incomesSumPerMonth[dateToParse.getMonth()] - this._spendingSumPerMonth[dateToParse.getMonth()] - monthlyOverview.saving;
  	}
 
 }
