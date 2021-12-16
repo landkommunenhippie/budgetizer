@@ -24,14 +24,18 @@ export const selectIncomesSumofMonth = createSelector(
 			for (let monthlyAccountOverview of monthlyAccountOverviews) {
 				let dateOfMonthlyAccountOverview = new Date(monthlyAccountOverview.month);
 				let regIncomesSum =  regularIncomes
-					.filter(income => 
-							new Date(income.startDate) <= dateOfMonthlyAccountOverview
+					.filter(income => { 
+						let startDateIncome = new Date(income.startDate);
+						//set Date to beginning of month ot include starts within the month
+						startDateIncome.setDate(1);	
+						return startDateIncome <= dateOfMonthlyAccountOverview
 							&& (
 								income.endDate === undefined
 								|| income.endDate === null
 								|| new Date(income.endDate) >= dateOfMonthlyAccountOverview
 							)
-						)
+						}
+					)
 					.map(income => income.income)
 					.reduce(((acc: number, curr: number) => acc + curr ), 0 );
 				

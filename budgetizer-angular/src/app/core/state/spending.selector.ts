@@ -26,13 +26,18 @@ export const selectSpendingsSumPerMonth = createSelector(
 				let dateOfMonthlyAccountOverview = new Date(monthlyAccountOverview.month);
 
 				let regSpendingSum = regularSpendings
-					.filter(spending => 
-						new Date(spending.startDate) <= dateOfMonthlyAccountOverview
-						&& (
-							spending.endDate === undefined
-							|| spending.endDate === null
-							|| new Date(spending.endDate) >= dateOfMonthlyAccountOverview
-						)
+					.filter(spending =>
+						{ 
+							let spendingStartDate = new Date(spending.startDate);
+							//set Date to beginning of month ot include starts within the month
+							spendingStartDate.setDate(1);
+							return spendingStartDate <= dateOfMonthlyAccountOverview
+							&& (
+								spending.endDate === undefined
+								|| spending.endDate === null
+								|| new Date(spending.endDate) >= dateOfMonthlyAccountOverview
+							)
+						}
 					)
 					.map(spending => spending.spendingMonthly)
 					.reduce(((acc: number, curr: number) => acc + curr ), 0 );

@@ -19,7 +19,7 @@ export class RegularSpendingComponent implements OnInit, OnDestroy {
 		{label: 'Beschreibung', valuePropertyName: 'description',valueInputType: 'text', editable: true},
 		{label: 'Monatlich', valuePropertyName: 'spendingMonthly',valueInputType: 'number', editable: true},
 		{label: 'Jährlich', valuePropertyName: 'spendingAnually',valueInputType: 'number', editable: true},
-		{label: 'Gültig von', valuePropertyName: 'startDate',valueInputType: 'date', editable: true, displayProcessor: this.displayDate},
+		{label: 'Gültig von', valuePropertyName: 'startDate',valueInputType: 'date', editable: true, displayProcessor: this.displayDate, sortable: true, initialSort: true},
 		{label: 'Gültig bis', valuePropertyName: 'endDate',valueInputType: 'date', editable: true, displayProcessor: this.displayDate}
 
 	]
@@ -53,5 +53,4 @@ export class RegularSpendingComponent implements OnInit, OnDestroy {
 		
 		return new Intl.DateTimeFormat('de-DE', options).format(dateToParse); 
 	}
-
 }
