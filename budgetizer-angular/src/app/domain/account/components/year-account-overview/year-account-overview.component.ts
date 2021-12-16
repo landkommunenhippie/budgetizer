@@ -29,7 +29,7 @@ export class YearAccountOverviewComponent implements OnInit {
 	]
 	emptyItemFactory = () => new MonthlyAccountOverviewViewModel(new Date(), 0, 0, 0);
 
-	private _regularIncomesSum: any = new Map;
+	private _IncomesSumPerMonth: any = new Map;
 	private _regularSpendingsSum: number = -1;
 	private _ngDestroyed$ = new Subject();
 	
@@ -42,7 +42,7 @@ export class YearAccountOverviewComponent implements OnInit {
 
 		this.store.select(selectIncomesSumofMonth)
 			.pipe(takeUntil(this._ngDestroyed$))
-			.subscribe((sumOfRegulars: any) => this._regularIncomesSum = sumOfRegulars);
+			.subscribe((sumOfRegulars: any) => this._IncomesSumPerMonth = sumOfRegulars);
 
 		this.store.select(selectRegularSpendingsSumPerMonth)
 			.pipe(takeUntil(this._ngDestroyed$))
@@ -67,7 +67,7 @@ export class YearAccountOverviewComponent implements OnInit {
 
 	getIncomesOfMonth(monthlyOverview: MonthlyAccountOverviewViewModel): number {
 		let dateToParse: Date = typeof monthlyOverview.month === 'string' ?  new Date(monthlyOverview.month) : monthlyOverview.month;
-		return this._regularIncomesSum[dateToParse.getMonth()];
+		return this._IncomesSumPerMonth[dateToParse.getMonth()];
 	}
 
 	getSpendingsOfMonth(monthlyOverview: MonthlyAccountOverviewViewModel): number {
@@ -79,7 +79,7 @@ export class YearAccountOverviewComponent implements OnInit {
 		// TODO add choosing of month when irregulars are defined
 		let dateToParse: Date = typeof monthlyOverview.month === 'string' ?  new Date(monthlyOverview.month) : monthlyOverview.month;
 			
-		return this._regularIncomesSum[dateToParse.getMonth()] - this._regularSpendingsSum;
+		return this._IncomesSumPerMonth[dateToParse.getMonth()] - this._regularSpendingsSum;
  	}
 
 }

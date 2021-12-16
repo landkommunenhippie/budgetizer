@@ -56,6 +56,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { IncomeTabViewComponent } from './domain/income/components/income-tab-view/income-tab-view.component';
 import { OneTimeIncomeComponent } from './domain/income/components/one-time-income/one-time-income.component';
 import { OneTimeIncomeService } from './domain/income/services/one-time-income.service';
+import { SpendingTabViewComponent } from './domain/spending/components/spending-tab-view/spending-tab-view.component';
 
 export function initApp(
 	regularIncomeService: RegularIncomeService,
@@ -80,6 +81,7 @@ export function initApp(
     DevStateCounterComponent,
     IncomeTabViewComponent,
     OneTimeIncomeComponent,
+    SpendingTabViewComponent,
   ],
   imports: [
     BrowserModule,
