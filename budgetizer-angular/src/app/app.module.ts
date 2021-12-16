@@ -24,6 +24,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatSortModule } from '@angular/material/sort';
 
 /**
  * Custom 
@@ -106,6 +107,7 @@ export function initApp(
 		MatNativeDateModule,
 		MatSnackBarModule,
 		MatTabsModule,
+		MatSortModule,
 		StoreModule.forRoot({regularIncomes: regularIncomeReducer, oneTimeIncomes: oneTimeIncomeReducer, regularSpendings: regularSpendingReducer, oneTimeSpendings: oneTimeSpendingReducer, monthlyAccountOverviews: monthlyAccountOverviewReducer })
   ],
   providers: [
