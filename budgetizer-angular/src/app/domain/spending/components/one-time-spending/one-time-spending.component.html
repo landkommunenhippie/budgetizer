@@ -1,0 +1,7 @@
+<app-editable-table
+	[table-data]="oneTimeSpendings"
+	[table-descriptions]="tableDescription"
+	[table-data-construction-function]="emptyItemFactory"
+	(data-modified)="updateOneTimeSpendings($event)">
+
+</app-editable-table>

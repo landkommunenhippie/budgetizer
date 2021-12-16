@@ -1,11 +1,9 @@
 import { createReducer, on } from '@ngrx/store';
-import { RegularSpending } from 'src/app/core/models/states.model';
 import { regularSpendingsModified, regularSpendingsFromServer } from './regular-spending.action'
-
-export const initialState: RegularSpending[] = [];
+import { spendingState} from 'src/app/domain/spending/state/spending.state'
 
 export const regularSpendingReducer = createReducer(
-	initialState,
+	spendingState.regularSpendings,
 	on(
 		regularSpendingsModified,
 		regularSpendingsFromServer,

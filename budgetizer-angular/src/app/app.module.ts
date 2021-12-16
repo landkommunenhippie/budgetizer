@@ -44,6 +44,7 @@ import { StoreModule } from '@ngrx/store';
 import { regularIncomeReducer } from './domain/income/state/regular-income.reducer'
 import { oneTimeIncomeReducer } from './domain/income/state/one-time-income.reducer'
 import { regularSpendingReducer } from './domain/spending/state/regular-spending.reducer'
+import { oneTimeSpendingReducer } from './domain/spending/state/one-time-spending.reducer'
 import { monthlyAccountOverviewReducer } from './domain/account/state/monthly-account-overview.reducer';
 
 /**
@@ -57,16 +58,20 @@ import { IncomeTabViewComponent } from './domain/income/components/income-tab-vi
 import { OneTimeIncomeComponent } from './domain/income/components/one-time-income/one-time-income.component';
 import { OneTimeIncomeService } from './domain/income/services/one-time-income.service';
 import { SpendingTabViewComponent } from './domain/spending/components/spending-tab-view/spending-tab-view.component';
+import { OneTimeSpendingComponent } from './domain/spending/components/one-time-spending/one-time-spending.component';
+import { OneTimeSpendingService } from './domain/spending/services/one-time-spending.service';
 
 export function initApp(
 	regularIncomeService: RegularIncomeService,
 	oneTimeInvomceService: OneTimeIncomeService,
 	regularSpendingService: RegularSpendingService,
+	oneTimeSpendingService: OneTimeSpendingService,
 	monthlyAccountOverviewService: MonthlyAccountOverviewService) {
 	return () => {
 		regularIncomeService.loadRegularIncomes();
 		oneTimeInvomceService.loadOneTimeIncomes();
 		regularSpendingService.loadRegularSpendings();
+		oneTimeSpendingService.loadOneTimeSpendings();
 		monthlyAccountOverviewService.loadMonthlyAccountOverviews();
 	};
 }
@@ -82,6 +87,7 @@ export function initApp(
     IncomeTabViewComponent,
     OneTimeIncomeComponent,
     SpendingTabViewComponent,
+    OneTimeSpendingComponent,
   ],
   imports: [
     BrowserModule,
@@ -100,13 +106,13 @@ export function initApp(
 		MatNativeDateModule,
 		MatSnackBarModule,
 		MatTabsModule,
-		StoreModule.forRoot({regularIncomes: regularIncomeReducer, oneTimeIncomes: oneTimeIncomeReducer, regularSpendings: regularSpendingReducer, monthlyAccountOverviews: monthlyAccountOverviewReducer })
+		StoreModule.forRoot({regularIncomes: regularIncomeReducer, oneTimeIncomes: oneTimeIncomeReducer, regularSpendings: regularSpendingReducer, oneTimeSpendings: oneTimeSpendingReducer, monthlyAccountOverviews: monthlyAccountOverviewReducer })
   ],
   providers: [
 		{
 			provide: APP_INITIALIZER,
 			useFactory: initApp,
-			deps: [RegularIncomeService, OneTimeIncomeService, RegularSpendingService, MonthlyAccountOverviewService],
+			deps: [RegularIncomeService, OneTimeIncomeService, RegularSpendingService, OneTimeSpendingService, MonthlyAccountOverviewService],
 			multi: true
 		}
 

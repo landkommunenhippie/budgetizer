@@ -18,6 +18,14 @@ export interface RegularSpending {
 	spendingAnually: number
 }
 
+export interface OneTimeSpending {
+	name: string,
+	description: string,
+	date: Date,
+	spending: number
+}
+
+
 export interface MonthlyAccountOverview {
 	month: Date,
 	accountAtStart: number,

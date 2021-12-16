@@ -1,5 +1,6 @@
-import { RegularSpending } from "src/app/core/models/states.model";
+import { OneTimeSpending, RegularSpending } from "src/app/core/models/states.model";
 
-export interface spendingState {
-	regularSpendings: RegularSpending[];
+export class spendingState {
+	public static regularSpendings: RegularSpending[] = [];
+	public static oneTimeSpendings: OneTimeSpending[] = [];
 }
