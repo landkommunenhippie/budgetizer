@@ -9,7 +9,7 @@
 				<td mat-cell *matCellDef="let rowData; let rowIdx = index;"> 
 
 					<span *ngIf="!tableDesc.editable || tableDesc.dataSource  || !isEditMode[rowIdx]">
-						{{   getDisplayValue(rowData, tableDesc.valuePropertyName, tableDesc.displayProcessor, tableDesc.dataSource) }}
+						{{ getDisplayValue(rowData, tableDesc.valuePropertyName, tableDesc.displayProcessor, tableDesc.dataSource, tableDesc.valueInputType === 'number') }}
 					</span>
 
 					<mat-form-field

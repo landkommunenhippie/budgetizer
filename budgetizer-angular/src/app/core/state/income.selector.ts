@@ -1,5 +1,6 @@
 import { createSelector, createFeatureSelector } from '@ngrx/store'
 import { OneTimeIncome, RegularIncome } from '../models/states.model';
+import { selectMonthlyAccountOverviews } from './account.selector';
 
 /**
  *  Regular Incomes
@@ -11,27 +12,43 @@ export const selectRegularIncomes = createFeatureSelector<RegularIncome[]>('regu
  */
  export const selectOneTimeIncomes = createFeatureSelector<OneTimeIncome[]>('oneTimeIncomes');
 
-
+export const incomePerMonthMapKey = (date: Date) => `${date.getMonth()}-${date.getFullYear()}`; 
 export const selectIncomesSumofMonth = createSelector(
   selectRegularIncomes,
 	selectOneTimeIncomes,
-   (regularIncomes, oneTimeIncomes) => {
+	selectMonthlyAccountOverviews,
+	(regularIncomes, oneTimeIncomes, monthlyAccountOverviews) => {
     let monthIncomeMap: any = {};
 			
-		if (regularIncomes && oneTimeIncomes) {
-			for (let i = 0; i < 12; i++) {
+		if (regularIncomes && oneTimeIncomes && monthlyAccountOverviews) {
+			for (let monthlyAccountOverview of monthlyAccountOverviews) {
+				let dateOfMonthlyAccountOverview = new Date(monthlyAccountOverview.month);
 				let regIncomesSum =  regularIncomes
-				.map(income => income.income)
-				.reduce(((acc: number, curr: number) => acc + curr ), 0 );
+					.filter(income => 
+							new Date(income.startDate) <= dateOfMonthlyAccountOverview
+							&& (
+								income.endDate === undefined
+								|| income.endDate === null
+								|| new Date(income.endDate) >= dateOfMonthlyAccountOverview
+							)
+						)
+					.map(income => income.income)
+					.reduce(((acc: number, curr: number) => acc + curr ), 0 );
+				
 				let oneTimeIncomesSum =
 					oneTimeIncomes
-						.filter((income: OneTimeIncome) => new Date(income.date).getMonth() === i)
+						.filter((income: OneTimeIncome) => {
+								let incomeDate = new Date(income.date); 
+								return incomeDate.getMonth() === dateOfMonthlyAccountOverview.getMonth()
+									&& incomeDate.getFullYear === dateOfMonthlyAccountOverview.getFullYear;
+							}
+						)
 						.map((income: OneTimeIncome) => income.income)
 						.reduce(((acc: number, curr: number) => acc + curr ), 0 );
 			
-					monthIncomeMap[i] = regIncomesSum + oneTimeIncomesSum;
+				monthIncomeMap[incomePerMonthMapKey(dateOfMonthlyAccountOverview)] = regIncomesSum + oneTimeIncomesSum;
 			}
-    } 
+		}
 		return monthIncomeMap;
-  }
+	}
 );

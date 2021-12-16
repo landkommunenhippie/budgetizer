@@ -17,7 +17,9 @@ export class RegularIncomeComponent implements OnInit, OnDestroy {
 	tableDescription: EditableTableDescrption[] = [
 		{label: 'Name', valuePropertyName: 'name', valueInputType: 'text', editable: true},
 		{label: 'Beschreibung', valuePropertyName: 'description',valueInputType: 'text', editable: true},
-		{label: 'Einkommenshöhe', valuePropertyName: 'income',valueInputType: 'number', editable: true}
+		{label: 'Einkommenshöhe', valuePropertyName: 'income',valueInputType: 'number', editable: true},
+		{label: 'Gültig von', valuePropertyName: 'startDate',valueInputType: 'date', editable: true, displayProcessor: this.displayDate},
+		{label: 'Gültig bis', valuePropertyName: 'endDate',valueInputType: 'date', editable: true, displayProcessor: this.displayDate}
 	]
 	emptyItemFactory = regularIncomeConst;
 	private ngDestroyed$ = new Subject();
@@ -37,5 +39,16 @@ export class RegularIncomeComponent implements OnInit, OnDestroy {
 	updateRegularIncomes(regularIncomeViews: RegularIncomeViewModel[]):void {
 		let regularIncomes = regularIncomeViews.map(regIncomeViewModel => regIncomeViewModel.toRegularIncome())
 		this.store.dispatch(regularIncomesModified({regularIncomes}));
+	}
+
+	displayDate(date: Date|string) {
+		if (date === undefined || date === null) {
+			return undefined;
+		}
+		
+		let options: Intl.DateTimeFormatOptions = {dateStyle: 'medium'};
+		let dateToParse: Date = typeof date === 'string' ?  new Date(date) : date;
+		
+		return new Intl.DateTimeFormat('de-DE', options).format(dateToParse); 
 	}
 }

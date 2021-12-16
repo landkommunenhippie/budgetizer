@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { EditableTableDescrption } from '../../models/editable-table-description.model';
 import { MatTableDataSource } from '@angular/material/table';
+import { formatNumber } from '@angular/common';
 
 @Component({
   selector: 'app-editable-table',
@@ -72,14 +73,19 @@ export class EditableTableComponent implements OnInit {
 		this.datasource.data = this.tableData;
 	}
 
-	getDisplayValue(rowData: any, propertyName: string, displayProcessor: Function|undefined, dataSource: Function|undefined) : string {
+	getDisplayValue(rowData: any, propertyName: string, displayProcessor: Function|undefined, dataSource: Function|undefined, shallFormatNumber: boolean) : string {
+		let displayValue: any = undefined;
 		if (dataSource) {
-			return dataSource(rowData);
+			displayValue = dataSource(rowData);
+		} else if(displayProcessor) {
+			displayValue = displayProcessor(rowData[propertyName]);
+		} else {
+			displayValue = rowData[propertyName];
 		}
-		if(displayProcessor) {
-			return displayProcessor(rowData[propertyName]);
+		if (shallFormatNumber) {
+			displayValue = formatNumber(displayValue, 'de-DE', '1.0-2')
 		}
-		return rowData[propertyName];
+		return displayValue;
 	}
 
 	openDatePicker(dp: any) {
@@ -91,4 +97,7 @@ export class EditableTableComponent implements OnInit {
 		dp.close();    
   }
 
+	setTrimmedNumber($event: any, rowData: any, propertyName: string) {
+		console.log($event);
+	}
 }

@@ -6,7 +6,9 @@ export class RegularSpendingViewModel implements RegularSpending {
 		public name: string,
 		public description: string,
 		private _spendingMonthly: number,
-		private _spendingAnually: number
+		private _spendingAnually: number,
+		public startDate: Date,
+		public endDate?: Date
 	) {}
 
 	public get spendingMonthly(): number { return this._spendingMonthly; }
@@ -24,10 +26,10 @@ export class RegularSpendingViewModel implements RegularSpending {
 
 	public static createBy =
 		(regularSpending: RegularSpending): RegularSpendingViewModel => 
-			new RegularSpendingViewModel(regularSpending.name, regularSpending.description, regularSpending.spendingMonthly, regularSpending.spendingAnually);
+			new RegularSpendingViewModel(regularSpending.name, regularSpending.description, regularSpending.spendingMonthly, regularSpending.spendingAnually, regularSpending.startDate, regularSpending.endDate);
 
 	public toRegularSpending(): RegularSpending {
-		return { name: this.name, description: this.description, spendingMonthly: this._spendingMonthly, spendingAnually: this._spendingAnually };
+		return { name: this.name, description: this.description, spendingMonthly: this._spendingMonthly, spendingAnually: this._spendingAnually, startDate: this.startDate, endDate: this.endDate };
 	}
 }
 
@@ -36,5 +38,5 @@ export class RegularSpendingViewModel implements RegularSpending {
  * Used in view.
 */
 export const regularSpendingConst = (): RegularSpendingViewModel => {
-	return new RegularSpendingViewModel('', '', 0, 0) ;
+	return new RegularSpendingViewModel('', '', 0, 0, new Date(), new Date()) ;
 }

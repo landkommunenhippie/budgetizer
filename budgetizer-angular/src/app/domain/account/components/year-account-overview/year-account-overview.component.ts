@@ -3,8 +3,8 @@ import { MonthlyAccountOverviewViewModel } from '../../models/monthly-account-ov
 import { EditableTableDescrption } from 'src/app/shared/models/editable-table-description.model';
 import { Store } from '@ngrx/store';
 import { Subject, takeUntil } from 'rxjs';
-import { selectIncomesSumofMonth as selectIncomesSumPerMonth } from 'src/app/core/state/income.selector';
-import { selectSpendingsSumPerMonth } from 'src/app/core/state/spending.selector';
+import { incomePerMonthMapKey, selectIncomesSumofMonth as selectIncomesSumPerMonth } from 'src/app/core/state/income.selector';
+import { selectSpendingsSumPerMonth, spendingPerMonthMapKey } from 'src/app/core/state/spending.selector';
 import { selectMonthlyAccountOverviews } from 'src/app/core/state/account.selector';
 import { MonthlyAccountOverview } from 'src/app/core/models/states.model';
 import { monthlyAccountOverviewsModified } from '../../state/monthly-account-overview.action';
@@ -59,7 +59,7 @@ export class YearAccountOverviewComponent implements OnInit {
 	}
 
 	displayMonth(date: Date|string) {
-		let options: Intl.DateTimeFormatOptions = {month: 'short'};
+		let options: Intl.DateTimeFormatOptions = {month: 'short', year: '2-digit'};
 		let dateToParse: Date = typeof date === 'string' ?  new Date(date) : date;
 		
 		return new Intl.DateTimeFormat('de-DE', options).format(dateToParse); 
@@ -67,19 +67,18 @@ export class YearAccountOverviewComponent implements OnInit {
 
 	getIncomesOfMonth(monthlyOverview: MonthlyAccountOverviewViewModel): number {
 		let dateToParse: Date = typeof monthlyOverview.month === 'string' ?  new Date(monthlyOverview.month) : monthlyOverview.month;
-		return this._incomesSumPerMonth[dateToParse.getMonth()];
+		return this._incomesSumPerMonth[incomePerMonthMapKey(dateToParse)];
 	}
 
 	getSpendingsOfMonth(monthlyOverview: MonthlyAccountOverviewViewModel): number {
 		let dateToParse: Date = typeof monthlyOverview.month === 'string' ?  new Date(monthlyOverview.month) : monthlyOverview.month;
 		
-		return this._spendingSumPerMonth[dateToParse.getMonth()];
+		return this._spendingSumPerMonth[spendingPerMonthMapKey(dateToParse)];
 	}
 
 	calcMonthlyBudget(monthlyOverview: MonthlyAccountOverviewViewModel): number {
 		let dateToParse: Date = typeof monthlyOverview.month === 'string' ?  new Date(monthlyOverview.month) : monthlyOverview.month;
-			
-		return this._incomesSumPerMonth[dateToParse.getMonth()] - this._spendingSumPerMonth[dateToParse.getMonth()] - monthlyOverview.saving;
+		return this._incomesSumPerMonth[incomePerMonthMapKey(dateToParse)] - this._spendingSumPerMonth[spendingPerMonthMapKey(dateToParse)] - monthlyOverview.saving;
  	}
 
 }

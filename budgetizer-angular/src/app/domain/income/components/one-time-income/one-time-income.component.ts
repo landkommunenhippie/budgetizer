@@ -42,6 +42,7 @@ export class OneTimeIncomeComponent implements OnInit, OnDestroy {
 	}
 
 	displayDate(date: Date|string) {
+		
 		let options: Intl.DateTimeFormatOptions = {dateStyle: 'medium'};
 		let dateToParse: Date = typeof date === 'string' ?  new Date(date) : date;
 		
