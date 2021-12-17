@@ -69,7 +69,7 @@ export class YearAccountOverviewComponent implements OnInit {
 	}
 
 	updateMonthlyAccountOverviews(monthlyAccountOverviewViews: MonthlyAccountOverviewViewModel[]):void {
-		let monthlyAccountOverviews = monthlyAccountOverviewViews.map(monthlyOverviewView => monthlyOverviewView.toMonthlyAccountOverview());
+		let monthlyAccountOverviews = monthlyAccountOverviewViews.map(monthlyOverviewView => monthlyOverviewView.toInterface());
 		this.store.dispatch(monthlyAccountOverviewsModified({ monthlyAccountOverviews }));
 	}
 

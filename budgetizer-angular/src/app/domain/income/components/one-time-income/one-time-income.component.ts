@@ -37,7 +37,7 @@ export class OneTimeIncomeComponent implements OnInit, OnDestroy {
 	}
 
 	updateOneTimeIncomes(oneTimeIncomeViews: OneTimeIncomeViewModel[]):void {
-		let oneTimeIncomes: OneTimeIncome[] =  oneTimeIncomeViews.map(oneTimeIncomeView => oneTimeIncomeView.toOneTimeIncome())
+		let oneTimeIncomes: OneTimeIncome[] =  oneTimeIncomeViews.map(oneTimeIncomeView => oneTimeIncomeView.toInterface())
 		this._store.dispatch(oneTimeIncomesModified({oneTimeIncomes}));
 	}
 

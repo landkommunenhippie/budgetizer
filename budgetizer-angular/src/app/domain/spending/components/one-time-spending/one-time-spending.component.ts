@@ -37,7 +37,7 @@ export class OneTimeSpendingComponent implements OnInit, OnDestroy {
 	}
 
 	updateOneTimeSpendings(oneTimeSpendingViews: OneTimeSpendingViewModel[]):void {
-		let oneTimeSpendings: OneTimeSpending[] =  oneTimeSpendingViews.map(oneTimeIncomeView => oneTimeIncomeView.toOneTimeSpending())
+		let oneTimeSpendings: OneTimeSpending[] =  oneTimeSpendingViews.map(oneTimeIncomeView => oneTimeIncomeView.toInterface())
 		this._store.dispatch(oneTimeSpendingsModified({ oneTimeSpendings }));
 	}
 

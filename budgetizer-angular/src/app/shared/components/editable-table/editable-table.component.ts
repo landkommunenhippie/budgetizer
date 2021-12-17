@@ -3,6 +3,7 @@ import { EditableTableDescrption } from '../../models/editable-table-description
 import { MatTableDataSource } from '@angular/material/table';
 import { formatNumber } from '@angular/common';
 import { MatSort } from '@angular/material/sort';
+import { EditableView } from '../../models/editable-view.model';
 
 @Component({
   selector: 'app-editable-table',
@@ -11,7 +12,8 @@ import { MatSort } from '@angular/material/sort';
 })
 export class EditableTableComponent implements OnInit, AfterViewInit {
 
-	@Input('table-data') set tableData(incomingtableData: any[]) {
+	@Input('table-data')
+	set tableData(incomingtableData: EditableView<any,any>[]) {
 		this._tableData = [...incomingtableData];
 		this.refreshTable();
 	}
@@ -55,15 +57,15 @@ export class EditableTableComponent implements OnInit, AfterViewInit {
 
 	addItem(): void {
 		this.tableData.push(this.tableDataConstructionFunction());
-		this.toggleEditMode(this.tableData.length - 1);
 		this.refreshTable();
+		this.toggleEditMode(this.tableData.length - 1);
 	}
 
 	saveItem(index: number, $event: any):void {
 		this.tableData.splice(index, 1, this.tableDataInEditing[index]);
+		this.refreshTable();
 		this.toggleEditMode(index);
 		this.dataModified.next(this.tableData);
-		this.refreshTable();
 	}
 
 	discard(rowIndex: number): void {
@@ -73,7 +75,7 @@ export class EditableTableComponent implements OnInit, AfterViewInit {
 	toggleEditMode(rowIndex: number): void {
 		this.isEditMode[rowIndex] = !this.isEditMode[rowIndex];
 		if (this.isEditMode[rowIndex]) {
-			this.tableDataInEditing[rowIndex] = this._tableData[rowIndex];
+			this.tableDataInEditing[rowIndex] = this._tableData[rowIndex].clone();
 		} else {
 			this.tableDataInEditing.splice(rowIndex, 1);
 		}
@@ -81,7 +83,8 @@ export class EditableTableComponent implements OnInit, AfterViewInit {
 
 	delete(index: number): void {
 		this.tableData.splice(index, 1);
-		this.dataModified.next([...this.tableData]);
+		this.refreshTable();
+		this.dataModified.next(this.tableData);
 	}
 	
 	refreshTable(): void {

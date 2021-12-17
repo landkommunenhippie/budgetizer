@@ -1,12 +1,15 @@
 import { RegularIncome } from "src/app/core/models/states.model";
+import { EditableView } from "src/app/shared/models/editable-view.model";
 
-export class RegularIncomeViewModel implements RegularIncome {
+export class RegularIncomeViewModel extends EditableView<RegularIncome,RegularIncomeViewModel> implements RegularIncome {
 	constructor(
 		public name: string,
 		public description: string,
 		private _income: number,
 		public startDate: Date,
-		public endDate?: Date) { }
+		public endDate?: Date) {
+			super();
+		}
 
 	public set income(income: number) {
 		this._income = income * 1;
@@ -18,7 +21,10 @@ export class RegularIncomeViewModel implements RegularIncome {
 	public static createBy =
 		(regularIncome: RegularIncome): RegularIncomeViewModel => new RegularIncomeViewModel(regularIncome.name, regularIncome.description, regularIncome.income, regularIncome.startDate, regularIncome.endDate);
 
-	public toRegularIncome(): RegularIncome {
+	protected byInterface(dataOnly: RegularIncome): RegularIncomeViewModel {
+		return RegularIncomeViewModel.createBy(dataOnly);
+	}
+	public toInterface(): RegularIncome {
 		return {name: this.name, description: this.description, income: this._income, startDate: this.startDate, endDate: this.endDate};
 	}
 }	

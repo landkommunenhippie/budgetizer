@@ -37,7 +37,7 @@ export class RegularIncomeComponent implements OnInit, OnDestroy {
 	}
 
 	updateRegularIncomes(regularIncomeViews: RegularIncomeViewModel[]):void {
-		let regularIncomes = regularIncomeViews.map(regIncomeViewModel => regIncomeViewModel.toRegularIncome())
+		let regularIncomes = regularIncomeViews.map(regIncomeViewModel => regIncomeViewModel.toInterface())
 		this.store.dispatch(regularIncomesModified({regularIncomes}));
 	}
 
