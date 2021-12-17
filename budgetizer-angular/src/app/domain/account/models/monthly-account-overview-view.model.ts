@@ -5,13 +5,13 @@ export class MonthlyAccountOverviewViewModel implements MonthlyAccountOverview  
 		public month: Date,
 		public accountAtStart:number,
 		public accountAtEnd:number,
-		public realLeaving: number) { }
+		public reserveAssets: number) { }
 	
 		public static createBy =
 		(monthlyAccountOverview: MonthlyAccountOverview): MonthlyAccountOverviewViewModel => 
-			new MonthlyAccountOverviewViewModel(monthlyAccountOverview.month, monthlyAccountOverview.accountAtStart, monthlyAccountOverview.accountAtEnd, monthlyAccountOverview.realLeaving);
+			new MonthlyAccountOverviewViewModel(monthlyAccountOverview.month, monthlyAccountOverview.accountAtStart, monthlyAccountOverview.accountAtEnd, monthlyAccountOverview.reserveAssets);
 
 		public toMonthlyAccountOverview(): MonthlyAccountOverview {
-			return { month: this.month, accountAtStart: this.accountAtStart, accountAtEnd: this.accountAtEnd, realLeaving: this.realLeaving };
+			return { month: this.month, accountAtStart: this.accountAtStart, accountAtEnd: this.accountAtEnd, reserveAssets: this.reserveAssets };
 		}
 }

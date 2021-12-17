@@ -35,5 +35,5 @@ export interface MonthlyAccountOverview {
 	month: Date,
 	accountAtStart: number,
 	accountAtEnd: number,
-	realLeaving: number
+	reserveAssets: number
 }

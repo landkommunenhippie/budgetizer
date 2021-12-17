@@ -22,12 +22,12 @@ export class YearAccountOverviewComponent implements OnInit {
 		{label: 'Monat', valuePropertyName: 'month', valueInputType: 'date', editable: true, dateMonthOnly: true, displayProcessor: this.displayMonth, sortable:true},
 		{label: 'Einnahmen', valuePropertyName: 'calc_income',valueInputType: 'number',  dataSource: this.getIncomesOfMonth.bind(this)},
 		{label: 'Explizite Fixkosten', valuePropertyName: 'calc_reg_monthly_spending',valueInputType: 'number',  dataSource: this.getMonthlyRegularSpendingsOfMonth.bind(this)},
-		{label: 'Implizite Fixkosten', valuePropertyName: 'calc_reg_nonmonthly_spending',valueInputType: 'number',  dataSource: this.getNonMonthlyRegularSpendingsOfMonth.bind(this)},
+		{label: 'Implizite Fixkosten', valuePropertyName: 'calc_reg_nonmonthly_spending',valueInputType: 'number',  dataSource: this.getNonMonthlyRegularSpendingsOfMonth.bind(this), tooltipText:'Alle Fixkosten, die nicht monatlich vom Konto abgebucht werden. Die impliziten Fixkosten sollten über Rücklagen vorgehalten werden.'},
 		{label: 'Einmalige Kosten', valuePropertyName: 'calc_onetime_spending',valueInputType: 'number',  dataSource: this.getOneTimeSpendingsOfMonth.bind(this)},
-		{label: 'Gesamtkosten', valuePropertyName: 'calc_all_spending',valueInputType: 'number',  dataSource: this.getAllSpendingsOfMonth.bind(this)},
-		{label: 'Tatsächliche Rücklagen', valuePropertyName: 'realLeaving',valueInputType: 'number', editable: true},
-		{label: 'Bilanz', valuePropertyName: 'calc_saving',valueInputType: 'number', editable: false, dataSource: this.calcMonthlySaving.bind(this) },
-		{label: 'Monatsbudget', valuePropertyName: 'calc_monthly_budget', valueInputType: 'number', dataSource: this.calcMonthlyBudget.bind(this)},
+		{label: 'Gesamtkosten', valuePropertyName: 'calc_all_spending',valueInputType: 'number',  dataSource: this.getAllSpendingsOfMonth.bind(this), tooltipText: 'Summe aller im Monat zu deckenden Kosten.'},
+		{label: 'Tatsächliche Rücklagen', valuePropertyName: 'reserveAssets',valueInputType: 'number', editable: true, tooltipText:'Höhe an Rücklagen, die auf ein anderes eigenes Konto überwiesen wurden'},
+		{label: 'Bilanz', valuePropertyName: 'calc_balance',valueInputType: 'number', editable: false, dataSource: this.calcMonthlySaving.bind(this), tooltipText: 'Differenz der tatsächlichen Rücklagen und den impliziten Fixkosten'},
+		{label: 'Monatsbudget', valuePropertyName: 'calc_monthly_budget', valueInputType: 'number', dataSource: this.calcMonthlyBudget.bind(this), tooltipText: 'Im Monat auf dem Konto verfügbares Guthaben. Differenz zwischen Einnahmen und den expliziten Fixkosten, den einmaligen Kosten und den tatsächlichen Rücklagen im Monat'},
 		{label: 'Kontostand Monatsbeginn', valuePropertyName: 'accountAtStart',valueInputType: 'number', editable: true},
 		{label: 'Kontostand Monatsende', valuePropertyName: 'accountAtEnd',valueInputType: 'number', editable: true}
 	]
@@ -112,13 +112,13 @@ export class YearAccountOverviewComponent implements OnInit {
 	calcMonthlyBudget(monthlyOverview: MonthlyAccountOverviewViewModel): number {
 		let dateToParse: Date = typeof monthlyOverview.month === 'string' ?  new Date(monthlyOverview.month) : monthlyOverview.month;
 		let mapKey = spendingPerMonthMapKey(dateToParse);
-		return this._incomesSumPerMonth[mapKey] - this._monthlyRegularSpendingSumPerMonth[mapKey] - this._oneTimeSpendingSumPerMonth[mapKey] - monthlyOverview.realLeaving;
+		return this._incomesSumPerMonth[mapKey] - this._monthlyRegularSpendingSumPerMonth[mapKey] - this._oneTimeSpendingSumPerMonth[mapKey] - monthlyOverview.reserveAssets;
  	}
 
 	calcMonthlySaving(monthlyOverview: MonthlyAccountOverviewViewModel): number {
 		let dateToParse: Date = typeof monthlyOverview.month === 'string' ?  new Date(monthlyOverview.month) : monthlyOverview.month;
 		
-		return  monthlyOverview.realLeaving - this._nonMonthlyRegularSpendingSumPerMonth[spendingPerMonthMapKey(dateToParse)];
+		return  monthlyOverview.reserveAssets - this._nonMonthlyRegularSpendingSumPerMonth[spendingPerMonthMapKey(dateToParse)];
  	}
 
 }

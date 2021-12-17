@@ -33,10 +33,14 @@ export interface EditableTableDescrption {
 	/**
 	 * Specification if this coloumn is used for sorting
 	*/
-	sortable?: boolean
+	sortable?: boolean,
 	/**
 	 * Specification of the initial sort property
 	 * If multiple descriptions are set to true, the first one found will be used
 	 */
-	initialSort?: boolean
+	initialSort?: boolean,
+	/**
+	 * Specification of tooltip-text
+	 */
+	tooltipText?: string
 }
