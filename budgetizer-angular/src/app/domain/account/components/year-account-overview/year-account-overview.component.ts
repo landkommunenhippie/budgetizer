@@ -28,8 +28,9 @@ export class YearAccountOverviewComponent implements OnInit {
 		{label: 'Tatsächliche Rücklagen', valuePropertyName: 'reserveAssets',valueInputType: 'number', editable: true, tooltipText:'Höhe an Rücklagen, die auf ein anderes eigenes Konto überwiesen wurden'},
 		{label: 'Bilanz', valuePropertyName: 'calc_balance',valueInputType: 'number', editable: false, dataSource: this.calcMonthlySaving.bind(this), tooltipText: 'Differenz der tatsächlichen Rücklagen und den impliziten Fixkosten'},
 		{label: 'Monatsbudget', valuePropertyName: 'calc_monthly_budget', valueInputType: 'number', dataSource: this.calcMonthlyBudget.bind(this), tooltipText: 'Im Monat auf dem Konto verfügbares Guthaben. Differenz zwischen Einnahmen und den expliziten Fixkosten, den einmaligen Kosten und den tatsächlichen Rücklagen im Monat'},
-		{label: 'Kontostand Monatsbeginn', valuePropertyName: 'accountAtStart',valueInputType: 'number', editable: true},
-		{label: 'Kontostand Monatsende', valuePropertyName: 'accountAtEnd',valueInputType: 'number', editable: true}
+		{label: 'Kontostand Monatsbeginn', valuePropertyName: 'accountAtStart',valueInputType: 'number', editable: true, tooltipText: "Kontostand zum Beginn des Abrechnungsmonats (Lohntag)"},
+		{label: 'Kontostand Monatsende', valuePropertyName: 'accountAtEnd',valueInputType: 'number', editable: true, tooltipText: "Kontostand zum Ende des Abrechnungsmonats (Ein Tag vor Lohn)"},
+		{label: 'Alltägliche Ausgaben', valuePropertyName: 'calc_consume',valueInputType: 'number', editable: false, dataSource: this.calcMonthlyConsume.bind(this), tooltipText: 'Nicht getrackte Ausgaben wie Nahrungseinkauf oder kleinere Besorgungen. Differenz von der Differenz des Kontostandes zu Monatsendund Monatsanfang und expliziter Fixkosten, einmaliger Kosten und tatsächlicher Rücklagen'}
 	]
 	emptyItemFactory = () => new MonthlyAccountOverviewViewModel(new Date(), 0, 0, 0);
 
@@ -120,5 +121,14 @@ export class YearAccountOverviewComponent implements OnInit {
 		
 		return  monthlyOverview.reserveAssets - this._nonMonthlyRegularSpendingSumPerMonth[spendingPerMonthMapKey(dateToParse)];
  	}
+
+	calcMonthlyConsume(monthlyOverview: MonthlyAccountOverviewViewModel): number {
+		let dateToParse: Date = typeof monthlyOverview.month === 'string' ?  new Date(monthlyOverview.month) : monthlyOverview.month;
+		let mapKey = spendingPerMonthMapKey(dateToParse);
+		if (monthlyOverview.accountAtEnd && monthlyOverview.accountAtStart) {
+			return  ((monthlyOverview.accountAtEnd - monthlyOverview.accountAtStart) * -1) -  this._monthlyRegularSpendingSumPerMonth[mapKey] - this._oneTimeSpendingSumPerMonth[mapKey] - monthlyOverview.reserveAssets ;
+		}
+		return -1;
+	}
 
 }
