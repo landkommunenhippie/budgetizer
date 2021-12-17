@@ -15,50 +15,56 @@
 
 					<span *ngIf="!tableDesc.editable || tableDesc.dataSource  || !isEditMode[rowIdx]">
 						{{ getDisplayValue(rowData, tableDesc.valuePropertyName, tableDesc.displayProcessor, tableDesc.dataSource, tableDesc.valueInputType === 'number') }}
-					</span>
-
-					<mat-form-field
-						*ngIf="(tableDesc.editable && !tableDesc.dataSource) && isEditMode[rowIdx]"
-						class="table-edit-mode"
-						appearance="standard">
-						<input *ngIf="tableDesc.valueInputType === undefined || tableDesc.valueInputType === 'text'"
-							matInput
-							[(ngModel)]="tableDataInEditing[rowIdx][tableDesc.valuePropertyName]"
-							type="{{tableDesc.valueInputType}}"
-							placeholder="{{tableDesc.label}}">
-
-						<input *ngIf="tableDesc.valueInputType === 'number'"
-							matInput
-							[(ngModel)]="tableDataInEditing[rowIdx][tableDesc.valuePropertyName]"
-							type="{{tableDesc.valueInputType}}" 
-							placeholder="{{tableDesc.label}}"
-							step="0.01">
-
-						<ng-container *ngIf="tableDesc.valueInputType === 'date'">
-							<ng-container *ngIf="tableDesc.dateMonthOnly === true">	
-								<input
-									matInput
-									[matDatepicker]="picker"
-									[(ngModel)]="tableDataInEditing[rowIdx][tableDesc.valuePropertyName]"
-									(click)="openDatePicker(picker)">
-									<mat-datepicker
-										#picker
-										startView="year"
-										(monthSelected)="closeDatePicker($event, picker, tableDataInEditing[rowIdx], tableDesc.valuePropertyName)">
-									</mat-datepicker>
-							</ng-container>
-
-							<ng-container *ngIf="tableDesc.dateMonthOnly !== true">	
-								<input
-									matInput
-									[matDatepicker]="picker"
-									[(ngModel)]="tableDataInEditing[rowIdx][tableDesc.valuePropertyName]"
-									(click)="openDatePicker(picker)">
-									<mat-datepicker #picker>
-									</mat-datepicker>
-							</ng-container>
+					</span>					
+					<ng-container *ngIf="(tableDesc.editable && !tableDesc.dataSource) && isEditMode[rowIdx]">
+						
+						<ng-container *ngIf="tableDesc.valueInputType === 'check'">
+							<mat-checkbox [(ngModel)]="tableDataInEditing[rowIdx][tableDesc.valuePropertyName]">
+							</mat-checkbox>
 						</ng-container>
-					</mat-form-field>	
+
+						<mat-form-field *ngIf="tableDesc.valueInputType !== 'check'"
+							class="table-edit-mode"
+							appearance="standard">
+							<input *ngIf="tableDesc.valueInputType === undefined || tableDesc.valueInputType === 'text'"
+								matInput
+								[(ngModel)]="tableDataInEditing[rowIdx][tableDesc.valuePropertyName]"
+								type="{{tableDesc.valueInputType}}"
+								placeholder="{{tableDesc.label}}">
+
+							<input *ngIf="tableDesc.valueInputType === 'number'"
+								matInput
+								[(ngModel)]="tableDataInEditing[rowIdx][tableDesc.valuePropertyName]"
+								type="{{tableDesc.valueInputType}}" 
+								placeholder="{{tableDesc.label}}"
+								step="0.01">
+		
+							<ng-container *ngIf="tableDesc.valueInputType === 'date'">
+								<ng-container *ngIf="tableDesc.dateMonthOnly === true">	
+									<input
+										matInput
+										[matDatepicker]="picker"
+										[(ngModel)]="tableDataInEditing[rowIdx][tableDesc.valuePropertyName]"
+										(click)="openDatePicker(picker)">
+										<mat-datepicker
+											#picker
+											startView="year"
+											(monthSelected)="closeDatePicker($event, picker, tableDataInEditing[rowIdx], tableDesc.valuePropertyName)">
+										</mat-datepicker>
+								</ng-container>
+
+								<ng-container *ngIf="tableDesc.dateMonthOnly !== true">	
+									<input
+										matInput
+										[matDatepicker]="picker"
+										[(ngModel)]="tableDataInEditing[rowIdx][tableDesc.valuePropertyName]"
+										(click)="openDatePicker(picker)">
+										<mat-datepicker #picker>
+										</mat-datepicker>
+								</ng-container>
+							</ng-container>
+						</mat-form-field>
+					</ng-container>	
 				</td>
 			</ng-container>
 

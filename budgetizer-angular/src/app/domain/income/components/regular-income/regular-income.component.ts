@@ -18,7 +18,7 @@ export class RegularIncomeComponent implements OnInit, OnDestroy {
 		{label: 'Name', valuePropertyName: 'name', valueInputType: 'text', editable: true},
 		{label: 'Beschreibung', valuePropertyName: 'description',valueInputType: 'text', editable: true},
 		{label: 'Einkommenshöhe', valuePropertyName: 'income',valueInputType: 'number', editable: true},
-		{label: 'Gültig von', valuePropertyName: 'startDate',valueInputType: 'date', editable: true, displayProcessor: this.displayDate},
+		{label: 'Gültig von', valuePropertyName: 'startDate',valueInputType: 'date', editable: true, displayProcessor: this.displayDate, sortable:true},
 		{label: 'Gültig bis', valuePropertyName: 'endDate',valueInputType: 'date', editable: true, displayProcessor: this.displayDate}
 	]
 	emptyItemFactory = regularIncomeConst;

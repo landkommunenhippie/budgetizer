@@ -18,7 +18,7 @@ export class OneTimeSpendingComponent implements OnInit, OnDestroy {
   tableDescription: EditableTableDescrption[] = [
 		{label: 'Name', valuePropertyName: 'name', valueInputType: 'text', editable: true},
 		{label: 'Beschreibung', valuePropertyName: 'description',valueInputType: 'text', editable: true},
-		{label: 'Einnahmedatum', valuePropertyName: 'date', valueInputType: 'date', editable: true, displayProcessor: this.displayDate},
+		{label: 'Einnahmedatum', valuePropertyName: 'date', valueInputType: 'date', editable: true, displayProcessor: this.displayDate, sortable:true},
 		{label: 'Ausgabenhöhe', valuePropertyName: 'spending',valueInputType: 'number', editable: true}
 	]
 	emptyItemFactory = oneTimeSpendingConst;

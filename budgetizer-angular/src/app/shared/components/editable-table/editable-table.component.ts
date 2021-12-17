@@ -63,6 +63,7 @@ export class EditableTableComponent implements OnInit, AfterViewInit {
 		this.tableData.splice(index, 1, this.tableDataInEditing[index]);
 		this.toggleEditMode(index);
 		this.dataModified.next(this.tableData);
+		this.refreshTable();
 	}
 
 	discard(rowIndex: number): void {
@@ -76,7 +77,6 @@ export class EditableTableComponent implements OnInit, AfterViewInit {
 		} else {
 			this.tableDataInEditing.splice(rowIndex, 1);
 		}
-		
 	}
 
 	delete(index: number): void {
@@ -111,8 +111,4 @@ export class EditableTableComponent implements OnInit, AfterViewInit {
     tableObject[proprtyName]=eventData;
 		dp.close();    
   }
-
-	setTrimmedNumber($event: any, rowData: any, propertyName: string) {
-		console.log($event);
-	}
 }

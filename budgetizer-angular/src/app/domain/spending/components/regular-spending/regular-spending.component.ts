@@ -19,7 +19,8 @@ export class RegularSpendingComponent implements OnInit, OnDestroy {
 		{label: 'Beschreibung', valuePropertyName: 'description',valueInputType: 'text', editable: true},
 		{label: 'Monatlich', valuePropertyName: 'spendingMonthly',valueInputType: 'number', editable: true},
 		{label: 'Jährlich', valuePropertyName: 'spendingAnually',valueInputType: 'number', editable: true},
-		{label: 'Gültig von', valuePropertyName: 'startDate',valueInputType: 'date', editable: true, displayProcessor: this.displayDate, sortable: true, initialSort: true},
+		{label: 'Abrechnung Monatlich', valuePropertyName: 'monthly',valueInputType: 'check', editable: true, displayProcessor: this.showMonthly},
+		{label: 'Gültig von', valuePropertyName: 'startDate',valueInputType: 'date', editable: true, displayProcessor: this.displayDate, sortable: true},
 		{label: 'Gültig bis', valuePropertyName: 'endDate',valueInputType: 'date', editable: true, displayProcessor: this.displayDate}
 
 	]
@@ -52,5 +53,12 @@ export class RegularSpendingComponent implements OnInit, OnDestroy {
 		let dateToParse: Date = typeof date === 'string' ?  new Date(date) : date;
 		
 		return new Intl.DateTimeFormat('de-DE', options).format(dateToParse); 
+	}
+
+	showMonthly(monthly: boolean) {
+		if(monthly) {
+			return 'Monatlich'
+		}
+		return '';
 	}
 }

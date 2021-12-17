@@ -4,7 +4,7 @@ import { EditableTableDescrption } from 'src/app/shared/models/editable-table-de
 import { Store } from '@ngrx/store';
 import { Subject, takeUntil } from 'rxjs';
 import { incomePerMonthMapKey, selectIncomesSumofMonth as selectIncomesSumPerMonth } from 'src/app/core/state/income.selector';
-import { selectSpendingsSumPerMonth, spendingPerMonthMapKey } from 'src/app/core/state/spending.selector';
+import { selectMonthlyRegularSpendingsSumPerMonth, selectNonMonthlyRegularSpendingsSumPerMonth, selectOneTimeSpendingsSumPerMonth, spendingPerMonthMapKey } from 'src/app/core/state/spending.selector';
 import { selectMonthlyAccountOverviews } from 'src/app/core/state/account.selector';
 import { MonthlyAccountOverview } from 'src/app/core/models/states.model';
 import { monthlyAccountOverviewsModified } from '../../state/monthly-account-overview.action';
@@ -19,18 +19,24 @@ export class YearAccountOverviewComponent implements OnInit {
 	months: MonthlyAccountOverviewViewModel[] = [];
 	displayedColumns: string[] = ['month', 'income', 'spending', 'accountAtStart', 'accountAtEnd', 'saving'];
 	tableDescription: EditableTableDescrption[] = [
-		{label: 'Monat', valuePropertyName: 'month', valueInputType: 'date', editable: true, dateMonthOnly: true, displayProcessor: this.displayMonth},
+		{label: 'Monat', valuePropertyName: 'month', valueInputType: 'date', editable: true, dateMonthOnly: true, displayProcessor: this.displayMonth, sortable:true},
 		{label: 'Einnahmen', valuePropertyName: 'calc_income',valueInputType: 'number',  dataSource: this.getIncomesOfMonth.bind(this)},
-		{label: 'Ausgaben', valuePropertyName: 'calc_spending',valueInputType: 'number',  dataSource: this.getSpendingsOfMonth.bind(this)},
+		{label: 'Explizite Fixkosten', valuePropertyName: 'calc_reg_monthly_spending',valueInputType: 'number',  dataSource: this.getMonthlyRegularSpendingsOfMonth.bind(this)},
+		{label: 'Implizite Fixkosten', valuePropertyName: 'calc_reg_nonmonthly_spending',valueInputType: 'number',  dataSource: this.getNonMonthlyRegularSpendingsOfMonth.bind(this)},
+		{label: 'Einmalige Kosten', valuePropertyName: 'calc_onetime_spending',valueInputType: 'number',  dataSource: this.getOneTimeSpendingsOfMonth.bind(this)},
+		{label: 'Gesamtkosten', valuePropertyName: 'calc_all_spending',valueInputType: 'number',  dataSource: this.getAllSpendingsOfMonth.bind(this)},
+		{label: 'Tatsächliche Rücklagen', valuePropertyName: 'realLeaving',valueInputType: 'number', editable: true},
+		{label: 'Bilanz', valuePropertyName: 'calc_saving',valueInputType: 'number', editable: false, dataSource: this.calcMonthlySaving.bind(this) },
 		{label: 'Monatsbudget', valuePropertyName: 'calc_monthly_budget', valueInputType: 'number', dataSource: this.calcMonthlyBudget.bind(this)},
 		{label: 'Kontostand Monatsbeginn', valuePropertyName: 'accountAtStart',valueInputType: 'number', editable: true},
-		{label: 'Kontostand Monatsende', valuePropertyName: 'accountAtEnd',valueInputType: 'number', editable: true},
-		{label: 'Sparen', valuePropertyName: 'saving',valueInputType: 'number', editable: true}
+		{label: 'Kontostand Monatsende', valuePropertyName: 'accountAtEnd',valueInputType: 'number', editable: true}
 	]
 	emptyItemFactory = () => new MonthlyAccountOverviewViewModel(new Date(), 0, 0, 0);
 
 	private _incomesSumPerMonth: any = {};
-	private _spendingSumPerMonth: any = {};
+	private _oneTimeSpendingSumPerMonth: any = {};
+	private _monthlyRegularSpendingSumPerMonth: any = {};
+	private _nonMonthlyRegularSpendingSumPerMonth: any = {};
 	private _ngDestroyed$ = new Subject();
 	
   constructor(private store: Store) {	}
@@ -42,11 +48,20 @@ export class YearAccountOverviewComponent implements OnInit {
 
 		this.store.select(selectIncomesSumPerMonth)
 			.pipe(takeUntil(this._ngDestroyed$))
-			.subscribe((sumOfRegulars: any) => this._incomesSumPerMonth = sumOfRegulars);
+			.subscribe((mapOfSumOfAllIncomes: any) => this._incomesSumPerMonth = mapOfSumOfAllIncomes);
 
-		this.store.select(selectSpendingsSumPerMonth)
+		this.store.select(selectMonthlyRegularSpendingsSumPerMonth)
 			.pipe(takeUntil(this._ngDestroyed$))
-			.subscribe((sumOfRegulars: any) => this._spendingSumPerMonth = sumOfRegulars);
+			.subscribe((sumOfRegularSpendingsPerMonth: any) => this._monthlyRegularSpendingSumPerMonth = sumOfRegularSpendingsPerMonth);
+		
+		this.store.select(selectNonMonthlyRegularSpendingsSumPerMonth)
+			.pipe(takeUntil(this._ngDestroyed$))
+			.subscribe((sumOfRegularSpendingsPerMonth: any) => this._nonMonthlyRegularSpendingSumPerMonth = sumOfRegularSpendingsPerMonth);
+		
+		this.store.select(selectOneTimeSpendingsSumPerMonth)
+			.pipe(takeUntil(this._ngDestroyed$))
+			.subscribe((mapOfSumOfAllOneTimeSpendings: any) => this._oneTimeSpendingSumPerMonth = mapOfSumOfAllOneTimeSpendings);
+			
 	}
 
 	ngOnDestroy(): void {
@@ -70,15 +85,40 @@ export class YearAccountOverviewComponent implements OnInit {
 		return this._incomesSumPerMonth[incomePerMonthMapKey(dateToParse)];
 	}
 
-	getSpendingsOfMonth(monthlyOverview: MonthlyAccountOverviewViewModel): number {
+	getMonthlyRegularSpendingsOfMonth(monthlyOverview: MonthlyAccountOverviewViewModel): number {
 		let dateToParse: Date = typeof monthlyOverview.month === 'string' ?  new Date(monthlyOverview.month) : monthlyOverview.month;
 		
-		return this._spendingSumPerMonth[spendingPerMonthMapKey(dateToParse)];
+		return this._monthlyRegularSpendingSumPerMonth[spendingPerMonthMapKey(dateToParse)];
+	}
+
+	getNonMonthlyRegularSpendingsOfMonth(monthlyOverview: MonthlyAccountOverviewViewModel): number {
+		let dateToParse: Date = typeof monthlyOverview.month === 'string' ?  new Date(monthlyOverview.month) : monthlyOverview.month;
+		
+		return this._nonMonthlyRegularSpendingSumPerMonth[spendingPerMonthMapKey(dateToParse)];
+	}
+
+	getOneTimeSpendingsOfMonth(monthlyOverview: MonthlyAccountOverviewViewModel): number {
+		let dateToParse: Date = typeof monthlyOverview.month === 'string' ?  new Date(monthlyOverview.month) : monthlyOverview.month;
+		
+		return this._oneTimeSpendingSumPerMonth[spendingPerMonthMapKey(dateToParse)];
+	}
+
+	getAllSpendingsOfMonth(monthlyOverview: MonthlyAccountOverviewViewModel): number {
+		let dateToParse: Date = typeof monthlyOverview.month === 'string' ?  new Date(monthlyOverview.month) : monthlyOverview.month;
+		let mapKey = spendingPerMonthMapKey(dateToParse);
+		return this._oneTimeSpendingSumPerMonth[mapKey] + this._nonMonthlyRegularSpendingSumPerMonth[mapKey] + this._monthlyRegularSpendingSumPerMonth[mapKey];
 	}
 
 	calcMonthlyBudget(monthlyOverview: MonthlyAccountOverviewViewModel): number {
 		let dateToParse: Date = typeof monthlyOverview.month === 'string' ?  new Date(monthlyOverview.month) : monthlyOverview.month;
-		return this._incomesSumPerMonth[incomePerMonthMapKey(dateToParse)] - this._spendingSumPerMonth[spendingPerMonthMapKey(dateToParse)] - monthlyOverview.saving;
+		let mapKey = spendingPerMonthMapKey(dateToParse);
+		return this._incomesSumPerMonth[mapKey] - this._monthlyRegularSpendingSumPerMonth[mapKey] - this._oneTimeSpendingSumPerMonth[mapKey] - monthlyOverview.realLeaving;
+ 	}
+
+	calcMonthlySaving(monthlyOverview: MonthlyAccountOverviewViewModel): number {
+		let dateToParse: Date = typeof monthlyOverview.month === 'string' ?  new Date(monthlyOverview.month) : monthlyOverview.month;
+		
+		return  monthlyOverview.realLeaving - this._nonMonthlyRegularSpendingSumPerMonth[spendingPerMonthMapKey(dateToParse)];
  	}
 
 }

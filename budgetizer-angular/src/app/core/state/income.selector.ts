@@ -44,7 +44,7 @@ export const selectIncomesSumofMonth = createSelector(
 						.filter((income: OneTimeIncome) => {
 								let incomeDate = new Date(income.date); 
 								return incomeDate.getMonth() === dateOfMonthlyAccountOverview.getMonth()
-									&& incomeDate.getFullYear === dateOfMonthlyAccountOverview.getFullYear;
+									&& incomeDate.getFullYear() === dateOfMonthlyAccountOverview.getFullYear();
 							}
 						)
 						.map((income: OneTimeIncome) => income.income)

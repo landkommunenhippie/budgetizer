@@ -18,8 +18,9 @@ export interface RegularSpending {
 	description: string,
 	spendingMonthly: number
 	spendingAnually: number
+	monthly:boolean
 	startDate: Date,
-	endDate?: Date
+	endDate?: Date,
 }
 
 export interface OneTimeSpending {
@@ -34,5 +35,5 @@ export interface MonthlyAccountOverview {
 	month: Date,
 	accountAtStart: number,
 	accountAtEnd: number,
-	saving: number
+	realLeaving: number
 }

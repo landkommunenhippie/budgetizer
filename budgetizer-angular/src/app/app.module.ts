@@ -25,6 +25,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSortModule } from '@angular/material/sort';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 /**
  * Custom 
@@ -108,6 +109,7 @@ export function initApp(
 		MatSnackBarModule,
 		MatTabsModule,
 		MatSortModule,
+		MatCheckboxModule,
 		StoreModule.forRoot({regularIncomes: regularIncomeReducer, oneTimeIncomes: oneTimeIncomeReducer, regularSpendings: regularSpendingReducer, oneTimeSpendings: oneTimeSpendingReducer, monthlyAccountOverviews: monthlyAccountOverviewReducer })
   ],
   providers: [
