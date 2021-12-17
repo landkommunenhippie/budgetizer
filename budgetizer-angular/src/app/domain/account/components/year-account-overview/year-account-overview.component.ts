@@ -19,7 +19,7 @@ export class YearAccountOverviewComponent implements OnInit {
 	months: MonthlyAccountOverviewViewModel[] = [];
 	displayedColumns: string[] = ['month', 'income', 'spending', 'accountAtStart', 'accountAtEnd', 'saving'];
 	tableDescription: EditableTableDescrption[] = [
-		{label: 'Monat', valuePropertyName: 'month', valueInputType: 'date', editable: true, dateMonthOnly: true, displayProcessor: this.displayMonth, sortable:true},
+		{label: 'Monat', valuePropertyName: 'month', valueInputType: 'date', editable: true, dateMonthOnly: true, displayProcessor: this.displayMonth, sortable:true, initialSort: true},
 		{label: 'Einnahmen', valuePropertyName: 'calc_income',valueInputType: 'number',  dataSource: this.getIncomesOfMonth.bind(this)},
 		{label: 'Explizite Fixkosten', valuePropertyName: 'calc_reg_monthly_spending',valueInputType: 'number',  dataSource: this.getMonthlyRegularSpendingsOfMonth.bind(this)},
 		{label: 'Implizite Fixkosten', valuePropertyName: 'calc_reg_nonmonthly_spending',valueInputType: 'number',  dataSource: this.getNonMonthlyRegularSpendingsOfMonth.bind(this), tooltipText:'Alle Fixkosten, die nicht monatlich vom Konto abgebucht werden. Die impliziten Fixkosten sollten über Rücklagen vorgehalten werden.'},

@@ -18,7 +18,7 @@ export class OneTimeIncomeComponent implements OnInit, OnDestroy {
 	tableDescription: EditableTableDescrption[] = [
 		{label: 'Name', valuePropertyName: 'name', valueInputType: 'text', editable: true},
 		{label: 'Beschreibung', valuePropertyName: 'description',valueInputType: 'text', editable: true},
-		{label: 'Einnahmedatum', valuePropertyName: 'date', valueInputType: 'date', editable: true, displayProcessor: this.displayDate, sortable:true},
+		{label: 'Einnahmedatum', valuePropertyName: 'date', valueInputType: 'date', editable: true, displayProcessor: this.displayDate, sortable:true, initialSort: true},
 		{label: 'Einkommenshöhe', valuePropertyName: 'income',valueInputType: 'number', editable: true}
 	]
 	emptyItemFactory = oneTimeIncomeCons;

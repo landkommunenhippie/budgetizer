@@ -20,7 +20,7 @@ export class RegularSpendingComponent implements OnInit, OnDestroy {
 		{label: 'Monatlich', valuePropertyName: 'spendingMonthly',valueInputType: 'number', editable: true},
 		{label: 'Jährlich', valuePropertyName: 'spendingAnually',valueInputType: 'number', editable: true},
 		{label: 'Abrechnung Monatlich', valuePropertyName: 'monthly',valueInputType: 'check', editable: true, displayProcessor: this.showMonthly},
-		{label: 'Gültig von', valuePropertyName: 'startDate',valueInputType: 'date', editable: true, displayProcessor: this.displayDate, sortable: true},
+		{label: 'Gültig von', valuePropertyName: 'startDate',valueInputType: 'date', editable: true, displayProcessor: this.displayDate, sortable: true, initialSort: true},
 		{label: 'Gültig bis', valuePropertyName: 'endDate',valueInputType: 'date', editable: true, displayProcessor: this.displayDate}
 
 	]
