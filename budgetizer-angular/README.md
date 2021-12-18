@@ -6,6 +6,10 @@ You are viewing a project to try the flux-pattern and the mvvm-pattern.
 This is the core of the budgetizer-tool since all business logic is placed here.
 To get a glue what happens here have a look at the readme in the project root directory.
 
+## Favicon
+
+Favicon icon is taken from https://pngimg.com/image/21560 and under the creative commons licence (18 december 2021)
+
 ## Default-Readme
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.0.4.
