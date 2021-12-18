@@ -1,30 +1,10 @@
 # BudgetizerAngular
 
+## Scope
 
-Das Projekt soll für die private Haushaltsprüfung dienen. Es ist in Entwicklung und befasst sich vorerst vor allem mit dem Frontend.
-
-Bisher sind folgedendes vorhanden:
-
-* Übersicht über das Jahr
-	* Tabelle mit hard gecodetem Datensatz
-	* Soll später für genau ein Jahr vohranden sein
-	* Füllt Einkommen und Ausgaben automatisch basierend auf den jeweiligen Datensätzen aus
-	* Hat Felder für Kontostand zu Beginn/Ende des Monats und für bewusste Sparrücklagen
-		* Daraus können sonstige nicht fixe Kosten berechnet werden
-* Einkommen
-	* Regelmäßiges Einkommen
-* Ausgaben
-	* Regelmäßige Ausgaben
-		* Wird mit jährlichen und monatlichen Angaben möglich sein
-		* Der jeweils andere Wert wird dann berechnet
-
-**TBD**
-* Unregelmäßige Einnahmen
-* Unregelmäßige Ausgaben
-* Berechnung der Jahresübersicht
-* Anbindung an ein Backend, welches die Daten JSON-formatiert speichert
-
-
+You are viewing a project to try the flux-pattern and the mvvm-pattern.
+This is the core of the budgetizer-tool since all business logic is placed here.
+To get a glue what happens here have a look at the readme in the project root directory.
 
 ## Default-Readme
 
